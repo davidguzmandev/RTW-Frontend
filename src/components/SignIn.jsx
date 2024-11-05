@@ -16,13 +16,15 @@ export const SignIn = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const APIURL = import.meta.env.VITE_BACK_API_URL;
+
         const userData = {
             email,
             password
         };
-        
+
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/', userData);
+            const response = await axios.post(`${APIURL}/auth/`, userData);
 
             const { token, user } = response.data;
 
