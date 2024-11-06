@@ -15,8 +15,9 @@ export const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
         const APIURL = import.meta.env.VITE_BACK_API_URL;
+        console.log(APIURL);
 
         const userData = {
             email,
@@ -25,7 +26,6 @@ export const SignIn = () => {
 
         try {
             const response = await axios.post(`${APIURL}/auth/`, userData);
-            console.log(APIURL);
 
             const { token, user } = response.data;
 
