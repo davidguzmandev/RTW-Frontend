@@ -25,7 +25,7 @@ export const SignIn = () => {
 
         // Solicitud con axios
         try {
-            const response = await axios.get(`${APIURL}/auth/`, userData);
+            const response = await axios.get(`${APIURL}/auth/`, { params: userData });
 
             const { token, user } = response.data;
 
