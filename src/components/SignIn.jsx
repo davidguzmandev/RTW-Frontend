@@ -24,7 +24,7 @@ export const SignIn = () => {
         };
 
         try {
-            const response = await axios.get(`${APIURL}/auth/`, userData);
+            const response = await axios.post(`${APIURL}/auth/`, userData);
 
             const { token, user } = response.data;
 
