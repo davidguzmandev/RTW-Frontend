@@ -22,8 +22,37 @@ export const SignIn = () => {
             email,
             password
         };
-
+        //Solicitud con fetch
         try {
+            const response = await fetch(`${APIURL}/auth/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+        
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Error en la autenticación');
+            }
+        
+            const { token, user } = await response.json();
+        
+            if (token) {
+                login(user); // Guarda el usuario en el contexto
+                localStorage.setItem('token', token); // Almacena el token
+                navigate('/dashboard'); // Redirige al Dashboard
+            } else {
+                setErrorMessage('Credenciales inválidas');
+            }
+        } catch (error) {
+            console.error('Error de autenticación:', error);
+            setErrorMessage('Error en la autenticación: ' + error.message);
+        }
+
+        // Solicitud con axios
+        /* try {
             const response = await axios.post(`${APIURL}/auth/`, userData);
 
             const { token, user } = response.data;
@@ -38,7 +67,7 @@ export const SignIn = () => {
         } catch (error) {
             console.error('Error de autenticación:', error);
             setErrorMessage('Error en la autenticación: ' + (error.response?.data?.error || error.message));
-        }
+        } */
     };
 
   return (
