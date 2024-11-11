@@ -54,14 +54,13 @@ const Dashboard = () => {
 
   useEffect(() => {
 
-    if(!user) return; // Espera a que user este definido
-      const token = localStorage.getItem('token');
-      if (!token) {
-          navigate('/'); // Redirige a SignIn si no hay token
-          return;
-      }
+    const token = localStorage.getItem('token');
+    if (!token) {
+        navigate('/'); // Redirige a SignIn si no hay token
+        return;
+    }
 
-      // Cargar registros desde el archivo JSON y encontrar coincidencias de email
+    // Cargar registros desde el archivo JSON y encontrar coincidencias de email
     const fetchTimeRecording = async () => {
         try {
           const response = await fetch(`${API_URL}/time`);

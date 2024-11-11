@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { IconMail, IconKey } from '@tabler/icons-react';
-import axios from 'axios';
+/* import axios from 'axios'; */
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../utils/UserContext';
 
@@ -15,8 +15,15 @@ export const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        const APIURL = import.meta.env.VITE_BACK_API_URL;
+
+        try {
+            await login(email, password); // Deja que UserContext maneje la autenticación
+            navigate('/dashboard');       // Redirige al Dashboard después del login exitoso
+        } catch (error) {
+            setErrorMessage(error.message || 'Error en la autenticación');
+        }
+
+        /* const APIURL = import.meta.env.VITE_BACK_API_URL;
 
         const userData = {
             email,
@@ -25,8 +32,6 @@ export const SignIn = () => {
 
         // Solicitud con axios
         try {
-            console.log(APIURL);
-            console.log(userData);
             const response = await axios.post(`${APIURL}/auth`, userData);
 
             const { token, user } = response.data;
@@ -41,7 +46,7 @@ export const SignIn = () => {
         } catch (error) {
             console.error('Error de autenticación:', error);
             setErrorMessage('Error en la autenticación: ' + (error.response?.data?.error || error.message));
-        }
+        } */
     };
 
   return (
