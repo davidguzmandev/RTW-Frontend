@@ -69,6 +69,7 @@ const Dashboard = () => {
           // Filtrar los registros que coinciden con el email del usuario logueado
           const recordsWithSameEmail = data.filter((record) => record.email === user.email && record.open == true);
           setMatchingRecords(recordsWithSameEmail);
+          console.log(recordsWithSameEmail);
         } catch (error) {
           console.error('Error al cargar los registros:', error);
         }
