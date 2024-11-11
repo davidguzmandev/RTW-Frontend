@@ -122,7 +122,7 @@ const Dashboard = () => {
                         <div>
                           <p>No tienes ningún trabajo abierto.</p>
                           <div>
-                            <Link to="/time">New Punch-In</Link>
+                            <Link to="/time" className="rounded-lg ">New Punch-In</Link>
                           </div>
                         </div>
                     )}
