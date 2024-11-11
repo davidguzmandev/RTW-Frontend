@@ -118,7 +118,12 @@ const Dashboard = () => {
                             </ul>
                         </div>
                     ) : (
-                        <p>No tienes ningún trabajo abierto.</p>
+                        <div>
+                          <p>No tienes ningún trabajo abierto.</p>
+                          <div>
+                            <a href="http://">New Punch-In</a>
+                          </div>
+                        </div>
                     )}
                 </div>
             ) : (
