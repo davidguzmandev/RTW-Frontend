@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../partials/Navbar'
 import { UserContext } from '../utils/UserContext';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const navigate = useNavigate();
