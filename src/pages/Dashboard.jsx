@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../partials/Navbar'
 import { UserContext } from '../utils/UserContext';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -117,7 +118,12 @@ const Dashboard = () => {
                             </ul>
                         </div>
                     ) : (
-                        <p>No tienes ningún trabajo abierto.</p>
+                        <div>
+                          <p>No tienes ningún trabajo abierto.</p>
+                          <div>
+                            <Link to="/time" className="bg-green-800 text-white p-2 rounded hover:bg-green-600">New Punch-In</Link>
+                          </div>
+                        </div>
                     )}
                 </div>
             ) : (
