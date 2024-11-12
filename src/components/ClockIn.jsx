@@ -14,7 +14,7 @@ const ClockIn = () => {
     const [nextId, setNextId] = useState(null); // Estado para el siguiente ID
     const [error, setError] = useState(''); // Estado para gestionar el error
 
-    const works = ['Commercial', 'Supervisor', 'Residential', 'Displacement KM']
+    const works = ['Commercial', 'Supervisor', 'Residential', 'Displacement']
     const { user } = useContext(UserContext);
 
     //URL de la API backend
@@ -112,8 +112,6 @@ const ClockIn = () => {
                 throw new Error(`Error en la respuesta: ${response.statusText}`);
             }
 
-            const data = await response.json(); // Espera el resultado de la conversión a JSON
-            console.log(data); // Muestra los datos recibidos del servidor
             navigate('/dashboard');// Despues de guardar los datos redirigimos al dashboard
         } catch (error) {
             console.error('Error al enviar los datos: ', error);
