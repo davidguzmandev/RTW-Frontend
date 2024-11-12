@@ -12,6 +12,7 @@ const ClockIn = () => {
     const [comments, setComments] = useState('');
     const [location, setLocation] = useState({latitude:null, longitude:null});
     const [nextId, setNextId] = useState(null); // Estado para el siguiente ID
+    const [error, setError] = useState(''); // Estado para gestionar el error
 
     const works = ['Commercial', 'Supervisor', 'Residential', 'Displacement KM']
     const { user } = useContext(UserContext);
@@ -74,6 +75,14 @@ const ClockIn = () => {
     const punchIn = async (e) => {
         e.preventDefault();
 
+         // Verifica si al menos uno de los checkboxes está seleccionado
+        const isAnySelected = Object.values(work).includes(true);
+
+        if (!isAnySelected) {
+            setError('Seleccione al menos un tipo de trabajo'); // Si no hay ninguno seleccionado, muestra el error
+        return;
+        }
+
         const formData = {
             data: {
                 id: nextId,
@@ -128,7 +137,7 @@ const ClockIn = () => {
                         ))}
                     </select>
                 </div>
-
+                <p className='text-red-500'>{error}</p>
                 <fieldset className="mb-4">
                     <legend className='mb-4'>Type of Work:</legend>
                     {works.map((option) => (
