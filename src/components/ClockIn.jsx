@@ -147,6 +147,7 @@ const ClockIn = () => {
                                     type="checkbox"
                                     id={`work-${option}`}
                                     name={`work-${option}`}
+                                    checked={work[option] || false} // Controla el estado del checkbox con `checked`
                                     onChange={() => setWork(prevWork => ({
                                         ...prevWork,
                                         [option]: !prevWork[option] // Cambia solo el valor de la opción actual
