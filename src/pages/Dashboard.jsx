@@ -118,12 +118,17 @@ const Dashboard = () => {
                             </ul>
                         </div>
                     ) : (
-                        <div>
+                      <div className="flex items-center justify-center h-96">
+                        <div className="text-center">
                           <p>No tienes ningún trabajo abierto.</p>
+                          <br />
                           <div>
-                            <Link to="/time" className="bg-green-800 text-white p-2 rounded hover:bg-green-600">New Punch-In</Link>
+                              <Link to="/time" className="bg-green-800 text-white p-2 rounded hover:bg-green-600">
+                                  New Punch-In
+                              </Link>
                           </div>
                         </div>
+                      </div>
                     )}
                 </div>
             ) : (
