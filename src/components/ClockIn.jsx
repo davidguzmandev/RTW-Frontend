@@ -7,7 +7,7 @@ const ClockIn = () => {
     const navigate = useNavigate();
     const [clients, setClients] = useState([]); // Agregar los clientes
     const [selectedClient, setSelectedClient] = useState(''); // Estado para el cliente seleccionado
-    const [work, setWork] = useState([]);
+    const [work, setWork] = useState({});
     const [km, setKm] = useState('');
     const [comments, setComments] = useState('');
     const [location, setLocation] = useState({latitude:null, longitude:null});
@@ -146,7 +146,7 @@ const ClockIn = () => {
                                 <input 
                                     type="checkbox"
                                     id={`work-${option}`}
-                                    name="work"
+                                    name={`work-${option}`}
                                     onChange={() => setWork(prevWork => ({
                                         ...prevWork,
                                         [option]: !prevWork[option] // Cambia solo el valor de la opción actual
