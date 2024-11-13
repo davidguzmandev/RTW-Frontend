@@ -81,10 +81,12 @@ const Dashboard = () => {
 
   return (
       <>
+      <div className='bg-slate-200'>
         <Navbar />
-        <div className="mx-auto max-w-screen-xl px-6 py-3">
+        <div className='mx-auto max-w-screen-xl px-6 py-3'>
+        <div className="rounded-lg">
             {user ? (
-                <div>
+                <div className='px-8 py-4'>
                     <h2 className='font-semibold text-xl'>Welcome, {user.name}</h2>
                     <p className='text-sm mb-4'>{user.email}</p>
                     {matchingRecords.length > 0 ? (
@@ -93,22 +95,22 @@ const Dashboard = () => {
                               {matchingRecords.map((record) => (
                                   <li
                                   key={record.id}
-                                  className='max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2'
+                                  className='max-w-sm border border-gray-200 rounded-lg shadow bg-white dark:border-gray-400 m-2'
                                   >
                                       <div className="p-5">
-                                          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{record.client}</h5>
-                                          <p className='font-normal text-gray-700 dark:text-gray-400'>Work: {Object.keys(record.work).join(', ')}</p>
-                                          <p className='font-normal text-gray-700 dark:text-gray-400'>KM: {record.km}</p>
-                                          <p className='font-normal text-gray-700 dark:text-gray-400'>Comments: {record.comments}</p>
-                                          <p className='font-normal text-gray-700 dark:text-gray-400'>Location: {record.location.latitude}, {record.location.longitude}</p>
-                                          <p className='font-normal text-gray-700 dark:text-gray-400'>Date: {record.date}</p>
-                                          <p className='font-normal text-gray-700 dark:text-gray-400'>Hour: {record.hourOpen}</p>
+                                          <h5 className="mb-2 text-lg font-bold tracking-tight">{record.client}</h5>
+                                          <p className='font-normal text-gray-700'>Work: {Object.keys(record.work).join(', ')}</p>
+                                          <p className='font-normal text-gray-700'>KM: {record.km}</p>
+                                          <p className='font-normal text-gray-700'>Comments: {record.comments}</p>
+                                          <p className='font-normal text-gray-700'>Location: {record.location.latitude}, {record.location.longitude}</p>
+                                          <p className='font-normal text-gray-700'>Date: {record.date}</p>
+                                          <p className='font-normal text-gray-700'>Hour: {record.hourOpen}</p>
                                       </div>
                                       <div className="flex justify-end">
                                         <button
                                           onClick={() => handlePunchOut(record.id)}
                                           type="button"
-                                          className=" bg-red-800 text-white p-2 rounded-md hover:bg-red-600"
+                                          className=" bg-indigo-700 text-white p-2 rounded-md hover:bg-indigo-500"
                                         >
                                           Punch-out
                                         </button>
@@ -124,16 +126,18 @@ const Dashboard = () => {
                           <br />
                           <div>
                               <Link to="/time" className="bg-green-800 text-white p-2 rounded hover:bg-green-600">
-                                  New Punch-In
+                                 New Punch-In
                               </Link>
                           </div>
                         </div>
                       </div>
                     )}
                 </div>
-            ) : (
-                <p>Cargando datos del usuario...</p>
-            )}
+              ) : (
+                  <p>Cargando datos del usuario...</p>
+              )}
+            </div>
+          </div>
         </div>
       </>
   );

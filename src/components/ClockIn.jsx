@@ -22,7 +22,7 @@ const ClockIn = () => {
 
     // Fecha y hora actual
     const currentDate = moment().format('YYYY-MM-DD');
-    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const currentTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
     //Obtener la ubicacion
     const fetchLocation = () => {
