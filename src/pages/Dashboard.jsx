@@ -91,31 +91,31 @@ const Dashboard = () => {
                     <p className='text-sm mb-4'>{user.email}</p>
                     {matchingRecords.length > 0 ? (
                         <div>
-                          <ul className='flex-wrap flex'>
+                          <ul className='flex-wrap flex place-items-end'>
                               {matchingRecords.map((record) => (
-                                  <li
-                                  key={record.id}
-                                  className='max-w-sm border border-gray-200 rounded-lg shadow bg-white dark:border-gray-400 m-2'
-                                  >
-                                      <div className="p-5">
-                                          <h5 className="mb-2 text-lg font-bold tracking-tight">{record.client}</h5>
-                                          <p className='font-normal text-gray-700'>Work: {Object.keys(record.work).join(', ')}</p>
-                                          <p className='font-normal text-gray-700'>KM: {record.km}</p>
-                                          <p className='font-normal text-gray-700'>Comments: {record.comments}</p>
-                                          <p className='font-normal text-gray-700'>Location: {record.location.latitude}, {record.location.longitude}</p>
-                                          <p className='font-normal text-gray-700'>Date: {record.date}</p>
-                                          <p className='font-normal text-gray-700'>Hour: {record.hourOpen}</p>
-                                      </div>
-                                      <div className="flex justify-end">
-                                        <button
-                                          onClick={() => handlePunchOut(record.id)}
-                                          type="button"
-                                          className=" bg-indigo-700 text-white p-2 rounded-md hover:bg-indigo-500"
-                                        >
-                                          Punch-out
-                                        </button>
-                                      </div>
-                                  </li>
+                                <li
+                                key={record.id}
+                                className='max-w-sm border border-gray-200 rounded-lg shadow bg-white dark:border-gray-400 m-2 w-[364px]'
+                                >
+                                    <div className="p-5">
+                                        <h5 className="mb-2 text-lg font-bold tracking-tight">{record.client}</h5>
+                                        <p className='font-normal text-gray-700'>Work: {Object.keys(record.work).join(', ')}</p>
+                                        <p className='font-normal text-gray-700'>KM: {record.km}</p>
+                                        <p className='font-normal text-gray-700'>Comments: {record.comments}</p>
+                                        <p className='font-normal text-gray-700'>Location: {record.location.latitude}, {record.location.longitude}</p>
+                                        <p className='font-normal text-gray-700'>Date: {record.date}</p>
+                                        <p className='font-normal text-gray-700'>Hour: {record.hourOpen}</p>
+                                    </div>
+                                    <div className="flex justify-end">
+                                      <button
+                                        onClick={() => handlePunchOut(record.id)}
+                                        type="button"
+                                        className=" bg-indigo-700 text-white p-2 rounded-md hover:bg-indigo-500"
+                                      >
+                                        Punch-out
+                                      </button>
+                                    </div>
+                                </li>
                               ))}
                             </ul>
                         </div>

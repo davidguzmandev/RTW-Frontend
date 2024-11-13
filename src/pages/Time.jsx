@@ -15,8 +15,10 @@ const Time = () => {
 
     return (
         <>
-            <Navbar />
-            <ClockIn />
+            <div className='bg-slate-200'>
+                <Navbar />
+                <ClockIn />
+            </div>
         </>
     );
 };

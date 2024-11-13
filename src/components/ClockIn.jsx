@@ -120,13 +120,13 @@ const ClockIn = () => {
     };
 
     return (
-        <div className="mx-auto max-w-screen-xl px-6 py-3">
-            <form onSubmit={punchIn} className="p-4 bg-gray-100 rounded shadow-md">
+        <div className="mx-auto max-w-screen-xl px-6 py-3 bg-slate-200">
+            <form onSubmit={punchIn} className="p-4 bg-white rounded-lg shadow-md">
                 <div className="mb-4">
                     <label htmlFor="client" className="block text-gray-700">Client:</label>
                     <select 
                         id="client"
-                        className="border rounded p-2 w-full"
+                        className="border rounded-md p-2 w-full"
                         onChange={(e) => setSelectedClient(e.target.value)} // Cambiado a selectedClient
                         required>
                         <option value=""></option>
