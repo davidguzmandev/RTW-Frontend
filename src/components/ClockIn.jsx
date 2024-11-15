@@ -204,7 +204,7 @@ const ClockIn = () => {
                 <div className='text-right'>
                     <button
                         type="submit"
-                        className="bg-green-800 text-white p-2 rounded hover:bg-green-600"
+                        className="bg-indigo-700 text-white p-2 rounded-full hover:bg-indigo-600"
                     >
                         Punch-in
                     </button>
