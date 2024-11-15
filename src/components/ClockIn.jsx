@@ -120,13 +120,13 @@ const ClockIn = () => {
     };
 
     return (
-        <div className="mx-auto max-w-screen-xl px-6 py-3 bg-slate-200">
-            <form onSubmit={punchIn} className="p-4 bg-white rounded-lg shadow-md">
+        <div className="mx-auto max-w-screen-xl px-6 py-3 bg-white">
+            <form onSubmit={punchIn} className="p-4 bg-gray-100 rounded-lg">
                 <div className="mb-4">
                     <label htmlFor="client" className="block text-gray-700">Client:</label>
                     <select 
                         id="client"
-                        className="border rounded-md p-2 w-full"
+                        className="border rounded-full p-2 w-full"
                         onChange={(e) => setSelectedClient(e.target.value)} // Cambiado a selectedClient
                         required>
                         <option value=""></option>
@@ -165,7 +165,7 @@ const ClockIn = () => {
                         id="date"
                         value={currentDate}
                         readOnly
-                        className="border rounded p-2 w-full bg-gray-200 cursor-not-allowed"
+                        className="border rounded-full p-2 w-full bg-gray-200 cursor-not-allowed"
                     />
                 </div>
 
@@ -176,7 +176,7 @@ const ClockIn = () => {
                         id="hour"
                         value={currentTime}
                         readOnly
-                        className="border rounded p-2 w-full bg-gray-200 cursor-not-allowed"
+                        className="border rounded-full p-2 w-full bg-gray-200 cursor-not-allowed"
                     />
                 </div>
 
@@ -187,7 +187,7 @@ const ClockIn = () => {
                         id="km"
                         value={km}
                         onChange={(e) => setKm(e.target.value)}
-                        className="border rounded p-2 w-full"
+                        className="border rounded-full p-2 w-full"
                     />
                 </div>
 
@@ -197,7 +197,7 @@ const ClockIn = () => {
                         id="comments"
                         value={comments}
                         onChange={(e) => setComments(e.target.value)}
-                        className="border rounded p-2 w-full"
+                        className="border rounded-xl p-2 w-full"
                         rows="4"
                     />
                 </div>

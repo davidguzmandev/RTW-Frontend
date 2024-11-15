@@ -14,13 +14,12 @@ const Home = () => {
         navigate('/dashboard');
       }
     }, [navigate])
-    
 
     return (
         <>
             <div className="min-w-screen min-h-screen bg-gray-900 flex flex-col justify-between">
                 <div className="flex-grow flex items-center justify-center px-5 py-5">
-                    <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden max-w-[1000px]">
+                    <div className="bg-gray-200 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden max-w-[1000px]">
                         <div className="md:flex w-full">
                         <div className="hidden md:flex md:flex-wrap w-1/2 bg-indigo-500 py-10 px-10 justify-center content-center">
                             <img src="/images/gsp.webp" alt="GSP Entretien" className='max-w-md h-min'/>

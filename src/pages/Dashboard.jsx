@@ -81,51 +81,73 @@ const Dashboard = () => {
 
   return (
       <>
-      <div className='bg-slate-200'>
+      <div className='bg-white h-screen'>
         <Navbar />
         <div className='mx-auto max-w-screen-xl px-6 py-3'>
         <div className="rounded-lg">
             {user ? (
-                <div className='px-8 py-4'>
+                <div className='px-8 py-4 bg-gray-100 rounded-xl'>
                     <h2 className='font-semibold text-xl'>Welcome, {user.name}</h2>
                     <p className='text-sm mb-4'>{user.email}</p>
                     {matchingRecords.length > 0 ? (
                         <div>
-                          <ul className='flex-wrap flex place-items-end'>
-                              {matchingRecords.map((record) => (
-                                <li
-                                key={record.id}
-                                className='max-w-sm border border-gray-200 rounded-lg shadow bg-white dark:border-gray-400 m-2 w-[364px]'
-                                >
-                                    <div className="p-5">
-                                        <h5 className="mb-2 text-lg font-bold tracking-tight">{record.client}</h5>
-                                        <p className='font-normal text-gray-700'>Work: {Object.keys(record.work).join(', ')}</p>
-                                        <p className='font-normal text-gray-700'>KM: {record.km}</p>
-                                        <p className='font-normal text-gray-700'>Comments: {record.comments}</p>
-                                        <p className='font-normal text-gray-700'>Location: {record.location.latitude}, {record.location.longitude}</p>
-                                        <p className='font-normal text-gray-700'>Date: {record.date}</p>
-                                        <p className='font-normal text-gray-700'>Hour: {record.hourOpen}</p>
-                                    </div>
-                                    <div className="flex justify-end">
-                                      <button
-                                        onClick={() => handlePunchOut(record.id)}
-                                        type="button"
-                                        className=" bg-indigo-700 text-white p-2 rounded-md hover:bg-indigo-500"
-                                      >
-                                        Punch-out
-                                      </button>
-                                    </div>
-                                </li>
-                              ))}
-                            </ul>
-                        </div>
+                        <ul className='flex-wrap flex place-items-end'>
+                          {matchingRecords.map((record) => (
+                            <li
+                              key={record.id}
+                              className='max-w-sm border border-gray-200 rounded-lg shadow bg-white dark:border-gray-200 m-2 w-[275px] h-[270px] flex flex-col'
+                            >
+                              <div className="px-5 pt-5 text-gray-700 flex-grow">
+                                <h5 className="mb-2 font-bold tracking-tight text-base">{record.client}</h5>
+                                <p className='text-sm'>Work: {Object.keys(record.work).join(', ')}</p>
+                                <p className='text-sm'>KM: {record.km || "0"}</p>
+                                <p className='text-sm'>Location:&nbsp;
+                                  <a
+                                    href={`https://www.google.com/maps?q=${record.location.latitude},${record.location.longitude}`}
+                                    target='_blank'
+                                    rel="noopener noreferrer"
+                                    className='rounded-full hover:bg-gray-300 text-gray-600 hover:text-blue-500 transition-colors px-2 py-1 text-sm font-semibold'
+                                  >
+                                    Ver Mapa
+                                  </a>
+                                </p>
+                                <p className='text-sm'>Date: {record.date}</p>
+                                <p className='text-sm'>Hour: {record.hourOpen}</p>
+                                <p className='text-sm'>Comments: {record.comments || "No"}</p>
+                              </div>
+                              <div className="flex justify-end m-2">
+                              <button
+                                onClick={(e) => {
+                                  // Evitar que se ejecute la acción inmediatamente
+                                  e.preventDefault();
+
+                                  // Muestra la ventana de confirmación
+                                  const confirmed = window.confirm("Are you sure you want to Punch-out?");
+
+                                  // Si el usuario confirma, ejecuta la función handlePunchOut
+                                  if (confirmed) {
+                                    handlePunchOut(record.id);
+                                  }
+                                }}
+                                type="button"
+                                className="bg-indigo-700 text-white p-2 rounded-full hover:bg-indigo-500 text-sm"
+                              >
+                                Punch-out
+                              </button>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     ) : (
                       <div className="flex items-center justify-center h-96">
                         <div className="text-center">
                           <p>No tienes ningún trabajo abierto.</p>
                           <br />
                           <div>
-                              <Link to="/time" className="bg-green-800 text-white p-2 rounded hover:bg-green-600">
+                              <Link 
+                              to="/time" 
+                              className="bg-indigo-700 text-white p-2 rounded-full hover:bg-indigo-600">
                                  New Punch-In
                               </Link>
                           </div>

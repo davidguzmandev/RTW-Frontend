@@ -21,25 +21,25 @@ export function NavList() {
             </button>
         {/* Menu items */}
         <ul
-            className={`${ isOpen ? 'block rounded-md max-lg:border bg-white border-slate-100 max-lg:shadow-md' : 'hidden'}
-            absolute top-full right-0 lg:flex lg:static lg:w-auto lg:bg-transparent lg:flex-row lg:items-center lg:gap-6 lg:my-0 w-24`}
-            >
-            <li className="flex items-center rounded-md hover:bg-slate-200 hover:text-blue-500 transition-colors w-full justify-end p-2">
-            <Link to="/" className='text-right' onClick={toggleMenu}>Home</Link>
+        className={`${ isOpen ? 'block rounded-md max-lg:border bg-white border-slate-100 max-lg:shadow-md' : 'hidden'}
+        absolute top-full right-0 lg:flex lg:static lg:w-auto lg:bg-transparent lg:flex-row lg:items-center lg:gap-2 lg:my-0 w-24`}
+        >
+            <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors justify-end px-6 py-2 text-sm font-semibold">
+            <Link to="/" className='text-right ' onClick={toggleMenu}>Home</Link>
             </li>
-            <li className="flex items-center rounded-md hover:bg-slate-200 hover:text-blue-500 transition-colors w-full justify-end p-2">
-                <a href="#" onClick={toggleMenu}>Account</a>
+            <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors justify-end px-6 py-2 text-sm font-semibold">
+                <Link to="/time" onClick={toggleMenu}>Time Record</Link>
             </li>
-            <li className="flex items-center rounded-md hover:bg-slate-200 hover:text-blue-500 transition-colors w-full justify-end p-2">
-                <Link to="/time" onClick={toggleMenu}>Time</Link>
-            </li>
-            <li className="flex items-center rounded-md hover:bg-slate-200 hover:text-blue-500 transition-colors w-full justify-end p-2">
+            <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors justify-end px-6 py-2 text-sm font-semibold">
                 <button
                     onClick={handleLogout}
-                    className="flex items-center rounded-md hover:bg-slate-200 hover:text-blue-500 transition-colors"
+                    className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors"
                 >
                     Logout
                 </button>
+            </li>
+            <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors justify-end px-6 py-2 text-sm font-semibold">
+                <a href="#" onClick={toggleMenu}>Account</a>
             </li>
         </ul>
         </nav>
