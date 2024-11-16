@@ -1,14 +1,27 @@
-import { useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useHandleLogout } from '../utils/auth';
 import { FaBars, FaTimes } from 'react-icons/fa'; // Importa iconos para abrir y cerrar el menú
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../utils/UserContext';
 
 export function NavList() {
     const handleLogout = useHandleLogout();
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/'); // Redirige a SignIn si no hay token
+            return;
+        }
+      }, [navigate, user]);
 
     return (
         <nav className='relative'>
@@ -25,11 +38,23 @@ export function NavList() {
         absolute top-full right-0 lg:flex lg:static lg:w-auto lg:bg-transparent lg:flex-row lg:items-center lg:gap-2 lg:my-0 w-24`}
         >
             <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
-            <Link to="/" className='text-right ' onClick={toggleMenu}>Home</Link>
+                <Link to="/" className='text-right ' onClick={toggleMenu}>Home</Link>
             </li>
             <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
                 <Link to="/time" onClick={toggleMenu}>Time Record</Link>
             </li>
+            {user?.role === 'admin' &&
+                <>
+                    <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
+                    <Link to="https://rtw-backend.onrender.com/api/exportExcel" onClick={toggleMenu}>
+                        Export Data
+                    </Link>
+                    </li>
+                    <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
+                        <Link to="/" onClick={toggleMenu}>Edit Users</Link>
+                    </li>
+                </>
+            }
             <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
                 <button
                     onClick={handleLogout}
