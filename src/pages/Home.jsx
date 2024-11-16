@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { SignIn } from '../components/SignIn';
-import { Footer } from '../partials/Footer';
+import Footer from '../partials/Footer';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {

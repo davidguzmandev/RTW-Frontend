@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../partials/Navbar'
+import Footer from '../partials/Footer'
 import { UserContext } from '../utils/UserContext';
 import { Link } from 'react-router-dom';
 
@@ -81,9 +82,9 @@ const Dashboard = () => {
 
   return (
       <>
-      <div className='bg-white h-screen'>
+      <div className='bg-white min-h-screen flex flex-col'>
         <Navbar />
-        <div className='mx-auto max-w-screen-xl px-6 py-3'>
+        <div className='flex-grow mx-auto max-w-screen-xl px-6 py-3'>
         <div className="rounded-lg">
             {user ? (
                 <div className='px-8 py-4'>
@@ -164,10 +165,11 @@ const Dashboard = () => {
                     )}
                 </div>
               ) : (
-                  <p>Cargando datos del usuario...</p>
+                <p>Cargando datos del usuario...</p>
               )}
             </div>
           </div>
+          <Footer />
         </div>
       </>
   );

@@ -1,12 +1,11 @@
 import { useContext, useState, useEffect } from 'react';
-import { useHandleLogout } from '../utils/auth';
 import { FaBars, FaTimes } from 'react-icons/fa'; // Importa iconos para abrir y cerrar el menú
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../utils/UserContext';
+import { IconUserCircle } from '@tabler/icons-react';
 
 export function NavList() {
-    const handleLogout = useHandleLogout();
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
@@ -43,7 +42,8 @@ export function NavList() {
             <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
                 <Link to="/time" onClick={toggleMenu}>Time Record</Link>
             </li>
-            {user?.role === 'admin' &&
+            {/* Contenido para Admin y editores */}
+            {(user?.role === 'admin' || user?.role === 'editor') &&
                 <>
                     <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
                     <Link to="https://rtw-backend.onrender.com/api/exportExcel" onClick={toggleMenu}>
@@ -56,15 +56,9 @@ export function NavList() {
                 </>
             }
             <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
-                <button
-                    onClick={handleLogout}
-                    className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors"
-                >
-                    Logout
-                </button>
-            </li>
-            <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
-                <a href="#" onClick={toggleMenu}>Account</a>
+                <a href="/account" onClick={toggleMenu}>
+                    <IconUserCircle stroke={1.25} />
+                </a>
             </li>
         </ul>
         </nav>

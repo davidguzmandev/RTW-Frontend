@@ -8,7 +8,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between text-blue-gray-900 border-0 rounded-full p-4 shadow-inner bg-gray-100 pr-10 pl-10">
           <h1 className='font-bold text-lg'>
             Ready To Work
-            <span className='font-extralight'> | GSP</span>
+            <span className='font-extralight mr-40'> | GSP</span>
           </h1>
           <NavList />
         </div>
