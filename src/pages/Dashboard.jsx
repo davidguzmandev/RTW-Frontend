@@ -4,6 +4,7 @@ import Navbar from '../partials/Navbar'
 import Footer from '../partials/Footer'
 import { UserContext } from '../utils/UserContext';
 import { Link } from 'react-router-dom';
+import moment from 'moment-timezone'; // Time extension
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -15,10 +16,13 @@ const Dashboard = () => {
 
   const handlePunchOut = async (recordId) => {
     const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    // Fecha actual en la zona horaria local
+    const currentDateLocal = moment().tz('America/New_York').format('YYYY-MM-DD');
     const punchOutData = {
         id: recordId, // Incluye el ID del registro
         punchOutTime: time,
         punchOutLocation: location,
+        punchOutDate: currentDateLocal,
         open: false
     };
 
