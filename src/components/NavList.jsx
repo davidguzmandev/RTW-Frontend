@@ -27,14 +27,14 @@ export function NavList() {
         {/* Icono del burger menu */}
             <button
                 onClick={toggleMenu}
-                className='text-black lg:hidden focus:outline-none'
+                className='text-black xl:hidden focus:outline-none'
             >
                 {isOpen ? <FaTimes size={24}/> : <FaBars size={24} />}
             </button>
         {/* Menu items */}
         <ul
         className={`${ isOpen ? 'block rounded-md max-lg:border bg-white border-slate-100 max-lg:shadow-md w-48 text-left p-2' : 'hidden'}
-        absolute top-full right-0 lg:flex lg:static lg:w-auto lg:bg-transparent lg:flex-row lg:items-center lg:gap-2 lg:my-0 w-24`}
+        absolute top-full right-0 xl:flex lg:static lg:w-auto lg:bg-transparent lg:flex-row lg:items-center lg:gap-2 lg:my-0 w-24`}
         >
             <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
                 <Link to="/" className='text-right ' onClick={toggleMenu}>Home</Link>
