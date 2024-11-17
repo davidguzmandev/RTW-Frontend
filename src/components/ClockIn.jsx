@@ -79,7 +79,7 @@ const ClockIn = () => {
         const isAnySelected = Object.values(work).includes(true);
 
         if (!isAnySelected) {
-            setError('Seleccione al menos un tipo de trabajo'); // Si no hay ninguno seleccionado, muestra el error
+            setError('Select at least one type of work'); // Si no hay ninguno seleccionado, muestra el error
         return;
         }
 

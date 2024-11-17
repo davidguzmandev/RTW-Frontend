@@ -103,7 +103,7 @@ const Dashboard = () => {
                         <div className='bg-gray-100 p-4 rounded-xl'>
                           <p className='text-lg font-normal p-4 text-gray-600'>
                             <span className='inline-flex items-center rounded-full bg-indigo-100 px-2 py-1 text-sm font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10'>{matchingRecords.length}</span>
-                            &nbsp;Trabajos abiertos</p>
+                            &nbsp;Work in progress</p>
                           <ul className='flex-wrap flex place-items-end'>
                             {matchingRecords.map((record) => (
                               <li
@@ -155,7 +155,7 @@ const Dashboard = () => {
                     ) : (
                       <div className="flex items-center justify-center h-96">
                         <div className="text-center">
-                          <p>No tienes ningún trabajo abierto.</p>
+                          <p>You don't have any open work.</p>
                           <br />
                           <div>
                               <Link 
