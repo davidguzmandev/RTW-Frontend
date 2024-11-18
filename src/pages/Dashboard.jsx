@@ -160,8 +160,8 @@ const Dashboard = () => {
                           <div>
                               <Link 
                               to="/time" 
-                              className="bg-indigo-700 text-white p-2 rounded-full hover:bg-indigo-600">
-                                 New Punch-In
+                              className="bg-indigo-700 text-white p-2 rounded-full hover:bg-indigo-600 w-full">
+                                 Start Shift
                               </Link>
                           </div>
                         </div>
