@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../utils/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { IconClock, IconCalendar  } from '@tabler/icons-react';
 import moment from 'moment'; // Time extension
 
 const ClockIn = () => {
@@ -120,13 +121,13 @@ const ClockIn = () => {
     };
 
     return (
-        <div className="mx-auto max-w-screen-xl px-6 py-3 bg-white">
+        <div className="mx-auto max-w-screen-xl px-6 py-3 bg-white max-sm:w-screen w-[520px]">
             <form onSubmit={punchIn} className="p-4 bg-gray-100 rounded-lg">
                 <div className="mb-4">
-                    <label htmlFor="client" className="block text-gray-700">Client:</label>
-                    <select 
+                    <label htmlFor="client" className="block text-gray-700 font-medium text-sm">Workplace:</label>
+                    <select
                         id="client"
-                        className="border rounded-full p-2 w-full"
+                        className="border rounded-xl p-2 w-full h-10 focus:ring-2 ring-indigo-600 text-sm"
                         onChange={(e) => setSelectedClient(e.target.value)} // Cambiado a selectedClient
                         required>
                         <option value=""></option>
@@ -137,11 +138,11 @@ const ClockIn = () => {
                 </div>
                 <p className='text-red-500'>{error}</p>
                 <fieldset className="mb-4">
-                    <legend className='mb-4'>Type of Work:</legend>
+                    <legend className='mb-2 text-sm font-medium'>Type of Work:</legend>
                     {works.map((option) => (
                         <div key={option} className="flex items-center space-x-2">
                             <label htmlFor={`work-${option}`} className='font-medium'>
-                                <input 
+                                <input
                                     type="checkbox"
                                     id={`work-${option}`}
                                     name={`work-${option}`}
@@ -150,33 +151,35 @@ const ClockIn = () => {
                                         ...prevWork,
                                         [option]: !prevWork[option] // Cambia solo el valor de la opción actual
                                     }))}
-                                    className="w-5 h-4 text-gray-600 bg-gray-100 border-gray-300 focus:ring-gray-900 focus:ring-2 mr-2 mb-2"
+                                    className="w-5 h-4 bg-gray-100 border-gray-300 focus:ring-2 mr-2 mb-2 focus:ring-purple-500 rounded ring-offset-gray-800 text-purple-600"
                                 />
-                                {option} 
+                                {option}
                             </label>
                         </div>
                     ))}
                 </fieldset>
 
-                <div className="mb-4">
-                    <label htmlFor="date" className="block text-gray-700">Date:</label>
+                <div className="mb-4 flex">
+                    <label htmlFor="date" className="block text-sm">
+                        <IconCalendar stroke={2} />
+                    </label>
                     <input
                         type="date"
                         id="date"
                         value={currentDate}
                         readOnly
-                        className="border rounded-full p-2 w-full bg-gray-200 cursor-not-allowed"
+                        className="pl-2 w-[103px] bg-gray-100 cursor-not-allowed text-sm"
                     />
-                </div>
 
-                <div className="mb-4">
-                    <label htmlFor="hour" className="block text-gray-700">Hour:</label>
+                    <label htmlFor="hour" className="block text-gray-700 ml-4">
+                        <IconClock stroke={2} />
+                    </label>
                     <input
                         type="time"
                         id="hour"
                         value={currentTime}
                         readOnly
-                        className="border rounded-full p-2 w-full bg-gray-200 cursor-not-allowed"
+                        className="pl-1 w-[110px] bg-gray-100 cursor-not-allowed text-sm"
                     />
                 </div>
 
@@ -187,7 +190,7 @@ const ClockIn = () => {
                         id="km"
                         value={km}
                         onChange={(e) => setKm(e.target.value)}
-                        className="border rounded-full p-2 w-full"
+                        className="border rounded-xl p-2 w-full"
                     />
                 </div>
 
@@ -198,7 +201,7 @@ const ClockIn = () => {
                         value={comments}
                         onChange={(e) => setComments(e.target.value)}
                         className="border rounded-xl p-2 w-full"
-                        rows="4"
+                        rows="3"
                     />
                 </div>
                 <div className='text-right'>
