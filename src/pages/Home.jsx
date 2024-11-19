@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { SignIn } from '../components/SignIn';
+import { SignIn } from '../partials/SignIn';
 import Footer from '../partials/Footer';
 import { useNavigate } from 'react-router-dom';
 

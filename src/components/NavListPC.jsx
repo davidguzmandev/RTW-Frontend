@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../utils/UserContext';
 import { IconUserCircle } from '@tabler/icons-react';
 
-export function NavList() {
+export function NavListPC() {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
