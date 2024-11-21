@@ -4,7 +4,7 @@ import { UserContext } from "../utils/UserContext";
 import moment from "moment-timezone"; // Time extension
 import { Link } from "react-router-dom";
 
-export const CardPC = () => {
+export const CardMobile = () => {
   const navigate = useNavigate();
   const [matchingRecords, setMatchingRecords] = useState([]); // Registros con email coincidente
   const [location, setLocation] = useState({ latitude: null, longitude: null });
@@ -92,9 +92,9 @@ export const CardPC = () => {
   return (
     <>
       {matchingRecords.length > 0 ? (
-        <div className="bg-gray-100 p-4 rounded-xl">
-          <p className="text-lg font-normal p-4 text-gray-600">
-            <span className="inline-flex items-center rounded-full bg-indigo-100 px-2 py-1 text-sm font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
+        <div className="bg-gray-100 w-svw">
+          <p className="font-normal text-gray-600 text-sm text-center p-2">
+            <span className="inline-flex items-center rounded-full bg-indigo-100 px-1 font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
               {matchingRecords.length}
             </span>
             &nbsp;Work in progress
@@ -104,8 +104,8 @@ export const CardPC = () => {
             {matchingRecords.map((record) => (
               <li
                 key={record.id}
-                className="max-w-sm border border-gray-200 rounded-lg shadow bg-white dark:border-gray-200 m-2 w-[275px] h-[270px] flex flex-col">
-                <div className="px-5 pt-5 text-gray-700 flex-grow">
+                className="border border-gray-200 bg-white dark:border-gray-200 w-screen flex">
+                <div className="px-5 pt-5 text-gray-700 flex-grow flex flex-col w-3/4">
                   <h5 className="mb-2 font-bold tracking-tight text-base">
                     {record.client}
                   </h5>
@@ -125,11 +125,9 @@ export const CardPC = () => {
                   </p>
                   <p className="text-sm">Date: {record.date}</p>
                   <p className="text-sm">Hour: {record.hourOpen}</p>
-                  <p className="text-sm">
-                    Comments: {record.comments || "No"}
-                  </p>
+                  <p className="text-sm">Comments: {record.comments || "No"}</p>
                 </div>
-                <div className="flex justify-end m-2">
+                <div className="flex items-stretch">
                   <button
                     onClick={(e) => {
                       // Evitar que se ejecute la acción inmediatamente
@@ -146,7 +144,7 @@ export const CardPC = () => {
                       }
                     }}
                     type="button"
-                    className="bg-indigo-700 text-white p-2 rounded-full hover:bg-indigo-500 text-sm">
+                    className="bg-indigo-700 text-white p-2 hover:bg-indigo-500 text-sm h-full">
                     Punch-out
                   </button>
                 </div>

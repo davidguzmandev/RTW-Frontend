@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 import moment from "moment-timezone"; // Time extension
-import { Link } from "react-router-dom";
 import { CardPC } from "../components/CardPC";
+import { CardMobile } from "../components/CardMobile";
 
 export const Records = () => {
   const navigate = useNavigate();
@@ -93,40 +93,22 @@ export const Records = () => {
   return (
     <div className="rounded-lg">
       {user ? (
-        <div className="px-8 py-4">
-          <h2 className="rounded bg-white bg-transparent font-semibold text-xl text-center">
+        <div className="py-4">
+          <h2 className="rounded bg-white bg-transparent font-semibold text-xl text-center mb-4">
             Hi, {user.name}
           </h2>
-          {/* {user?.role === 'admin' && 
+          {/* {user?.role === 'admin' &&
                       <div className='bg-gray-100 p-4 rounded-xl mb-6'>
                         <p>Contenido para admin.</p>
                       </div>
                     } */}
-          {matchingRecords.length > 0 ? (
-            <div className="bg-gray-100 p-4 rounded-xl">
-              <p className="text-lg font-normal p-4 text-gray-600">
-                <span className="inline-flex items-center rounded-full bg-indigo-100 px-2 py-1 text-sm font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  {matchingRecords.length}
-                </span>
-                &nbsp;Work in progress
-              </p>
-              <CardPC />
-            </div>
-          ) : (
-            <div className="flex items-center justify-center h-96">
-              <div className="text-center">
-                <p>You don't have any open work.</p>
-                <br />
-                <div>
-                  <Link
-                    to="/time"
-                    className="bg-indigo-700 text-white p-2 rounded-full hover:bg-indigo-600 w-full">
-                    Start Shift
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
+          <div className="max-sm:hidden">
+            <CardPC />
+          </div>
+          {/* Clase para resoluciones de mobile */}
+          <div className="sm:hidden">
+            <CardMobile />
+          </div>
         </div>
       ) : (
         <p>Cargando datos del usuario...</p>

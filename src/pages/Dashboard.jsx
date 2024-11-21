@@ -8,9 +8,9 @@ const Dashboard = () => {
       <>
       <div className='bg-white min-h-screen flex flex-col'>
         <Navbar />
-        <div className='flex-grow mx-auto max-w-screen-xl px-6 py-3'>
-        <Records />
-        <Footer />
+        <div className='flex-grow mx-auto max-w-screen-xl py-3'>
+          <Records />
+          <Footer />
         </div>
       </div>
       </>
