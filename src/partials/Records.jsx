@@ -63,6 +63,7 @@ export const Records = () => {
           <h2 className="bg-transparenttext-center mb-4 absolute top-4 left-1/2 transform -translate-x-1/2 bg-white px-2 py-1 rounded-full shadow-md text-lg font-semibold z-10">
             Hi, {user.name}
           </h2>
+          <p className="bg-indigo-600 text-white text-center mb-4 absolute top-[480px] left-1/2 transform -translate-x-1/2 px-2 py-2 rounded-full shadow-md text-lg font-semibold z-10"> Start Shift</p>
           <div className="max-sm:hidden">
             <CardPC />
           </div>

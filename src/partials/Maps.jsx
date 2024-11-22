@@ -5,11 +5,6 @@ import { fetchLocation } from '../functions/fetchLocation'; // Asegúrate de que
 // Define las bibliotecas como una constante fuera del componente
 const libraries = ["places", "geometry", "marker"]; // Agrega otras si las necesitas
 
-const mapContainerStyle = {
-  width: "100%",
-  height: "500px",
-};
-
 const Maps = () => {
   const API_MAPS = import.meta.env.VITE_API_KEY_MAPS;
 
@@ -64,7 +59,7 @@ const Maps = () => {
 
   if (!isLoaded) return <div>Loading...</div>;
 
-  return <div ref={mapRef} style={mapContainerStyle} />;
+  return <div ref={mapRef} className="w-full h-[600px] fixed bg-cover bg-center"/>;
 };
 
 export default Maps;
