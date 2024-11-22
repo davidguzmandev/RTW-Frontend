@@ -145,7 +145,7 @@ export const CardMobile = () => {
                     }}
                     type="button"
                     className="bg-indigo-700 text-white p-2 hover:bg-indigo-500 text-sm h-full">
-                    Punch-out
+                    End Shift
                   </button>
                 </div>
               </li>
