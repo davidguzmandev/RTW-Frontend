@@ -9,8 +9,10 @@ const Dashboard = () => {
       <>
         <div className='bg-white min-h-screen flex flex-col'>
           <Navbar />
-          <div className='flex-grow mx-auto max-w-screen-xl pb-3'>
+          <div>
             <Maps />
+          </div>
+          <div className='flex-grow mx-auto max-w-screen-xl pb-3'>
             <Records />
             <Footer />
           </div>
