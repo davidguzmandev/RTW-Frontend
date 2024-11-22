@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 import { CardPC } from "../components/CardPC";
 import { CardMobile } from "../components/CardMobile";
@@ -60,10 +60,14 @@ export const Records = () => {
     <div className="rounded-lg mb-5">
       {user ? (
         <div>
-          <h2 className="bg-transparenttext-center mb-4 absolute top-4 left-1/2 transform -translate-x-1/2 bg-white px-2 py-1 rounded-full shadow-md text-lg font-semibold z-10">
+          <h2 className="bg-transparent text-center mb-4 max-sm:absolute max-sm:top-4 left-1/2 transform max-sm:-translate-x-1/2 max-sm:bg-white px-2 py-1 max-sm:rounded-full max-sm:shadow-md text-lg font-semibold max-sm:z-10">
             Hi, {user.name}
           </h2>
-          <p className="bg-indigo-600 text-white text-center mb-4 absolute top-[480px] left-1/2 transform -translate-x-1/2 px-2 py-2 rounded-full shadow-md text-lg font-semibold z-10"> Start Shift</p>
+          <Link to="/time">
+            <p className="bg-indigo-600 text-white text-center mb-4 absolute top-[480px] left-1/2 transform -translate-x-1/2 px-2 py-2 rounded-full shadow-md text-lg font-semibold z-10">
+              Start Shift
+            </p>
+          </Link>
           <div className="max-sm:hidden">
             <CardPC />
           </div>

@@ -1,65 +1,83 @@
-import { useLoadScript } from "@react-google-maps/api";
-import { useState, useEffect, useRef } from "react";
-import { fetchLocation } from '../functions/fetchLocation'; // Asegúrate de que la función fetchLocation esté bien importada
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { useState, useEffect } from 'react';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
-// Define las bibliotecas como una constante fuera del componente
-const libraries = ["places", "geometry", "marker"]; // Agrega otras si las necesitas
+// Configurar el icono del marcador por defecto
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+
+// Componente para actualizar la vista del mapa
+const RecenterMap = ({ lat, lng }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (lat && lng) {
+      map.setView([lat, lng], map.getZoom());
+    }
+  }, [lat, lng, map]);
+  return null;
+};
+
 
 const Maps = () => {
-  const API_MAPS = import.meta.env.VITE_API_KEY_MAPS;
-
-  const [center, setCenter] = useState({ lat: -73.5626686, lng: 45.5032363 }); // Estado inicial
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: API_MAPS,
-    libraries, // Usa la constante estática definida fuera
-    version: "weekly",
-  });
-
-  const mapRef = useRef(null);
+  const [position, setPosition] = useState(null);
 
   useEffect(() => {
-    // Obtener ubicación del usuario
-    const getLocation = async () => {
-      try {
-        const { latitude, longitude } = await fetchLocation();
-        // Actualizar el estado con la ubicación obtenida
-        setCenter({ lat: latitude, lng: longitude });
-      } catch (error) {
-        console.error("Error al obtener la ubicación:", error);
-      }
-    };
+    // Solicitar la ubicación del usuario
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          setPosition({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          });
+        },
+        (err) => {
+          console.error('Error al obtener la ubicación: ', err);
+          // Puedes establecer una ubicación predeterminada aquí si lo deseas
+          setPosition({ lat: -34.397, lng: 150.644 });
+        }
+      );
+    } else {
+      console.error('La geolocalización no es soportada por este navegador.');
+      // Establecer una ubicación predeterminada
+      setPosition({ lat: -34.397, lng: 150.644 });
+    }
+  }, []);
 
-    getLocation(); // Llamamos a la función asíncrona para obtener la ubicación
-
-  }, []); // Solo se ejecuta al montar el componente
-
-  useEffect(() => {
-    if (!isLoaded || !window.google) return;
-
-    // Inicializa el mapa manualmente con los valores de center
-    const map = new google.maps.Map(mapRef.current, {
-      center,
-      zoom: 14,
-      mapTypeControl: false,
-      streetViewControl: false,
-      fullscreenControl: false,
-      scaleControl: false,
-      rotateControl: false,
-      disableDefaultUI: true,
-    });
-
-    // Agregar marcador en el centro del mapa
-    new google.maps.Marker({
-      position: center,
-      map,
-      title: "Ubicación del usuario",
-    });
-  }, [isLoaded, center]); // El efecto se ejecutará cuando isLoaded o center cambien
-
-  if (!isLoaded) return <div>Loading...</div>;
-
-  return <div ref={mapRef} className="w-full h-[600px] fixed bg-cover bg-center"/>;
+  return (
+    <div className="relative">
+      {position ? (
+        <MapContainer
+          center={[position.lat, position.lng]}
+          zoom={20}
+          scrollWheelZoom={false}
+          className="w-full h-[500px] z-0"
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={[position.lat, position.lng]}>
+            <Popup>
+              You are here: {position.lat.toFixed(4)}, {position.lng.toFixed(4)}
+            </Popup>
+          </Marker>
+          <RecenterMap lat={position.lat} lng={position.lng} />
+        </MapContainer>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
 };
 
 export default Maps;

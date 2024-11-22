@@ -155,17 +155,9 @@ export const CardPC = () => {
           </ul>
         </div>
       ) : (
-        <div className="flex items-center justify-center h-96">
+        <div className="flex items-center justify-center">
           <div className="text-center">
             <p>You don't have any open work.</p>
-            <br />
-            <div>
-              <Link
-                to="/time"
-                className="bg-indigo-700 text-white p-2 rounded-full hover:bg-indigo-600 w-full">
-                Start Shift
-              </Link>
-            </div>
           </div>
         </div>
       )}
