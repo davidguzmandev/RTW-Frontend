@@ -7,28 +7,9 @@ import { CardMobile } from "../components/CardMobile";
 export const Records = () => {
   const navigate = useNavigate();
   const [matchingRecords, setMatchingRecords] = useState([]); // Registros con email coincidente
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
 
   const { user } = useContext(UserContext);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
-
-  const fetchLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error("Error al obtener la ubicación: ", error);
-        }
-      );
-    } else {
-      console.error("La geolocalización no es soportada en este navegador.");
-    }
-  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -54,7 +35,6 @@ export const Records = () => {
     };
 
     fetchTimeRecording();
-    fetchLocation();
   }, [navigate, user, API_URL]);
   return (
     <div className="rounded-lg mb-5">
@@ -64,7 +44,7 @@ export const Records = () => {
             Hi, {user.name}
           </h2>
           <Link to="/time">
-            <p className="bg-indigo-600 text-white text-center mb-4 absolute top-[480px] left-1/2 transform -translate-x-1/2 px-2 py-2 rounded-full shadow-md text-lg font-semibold z-10">
+            <p className="bg-indigo-600 text-white text-center mb-4 absolute top-[480px] left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full shadow-md text-lg font-semibold z-10">
               Start Shift
             </p>
           </Link>

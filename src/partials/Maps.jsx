@@ -31,9 +31,11 @@ const Maps = () => {
   const [position, setPosition] = useState(null);
 
   useEffect(() => {
+    let watchId;
+
     // Solicitar la ubicación del usuario
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
+      watchId = navigator.geolocation.watchPosition(
         (pos) => {
           setPosition({
             lat: pos.coords.latitude,
@@ -51,6 +53,13 @@ const Maps = () => {
       // Establecer una ubicación predeterminada
       setPosition({ lat: -34.397, lng: 150.644 });
     }
+
+    // Limpieza al desmontar el componente
+    return () => {
+      if (watchId !== undefined) {
+        navigator.geolocation.clearWatch(watchId);
+      }
+    };
   }, []);
 
   return (

@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 import moment from "moment-timezone"; // Time extension
-import { Link } from "react-router-dom";
 
 export const CardPC = () => {
   const navigate = useNavigate();

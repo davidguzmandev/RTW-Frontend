@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 import moment from "moment-timezone"; // Time extension
 import { Link } from "react-router-dom";
+import { fetchLocation } from "../functions/fetchLocation";
+import { calculateElapsedTime } from "../functions/elapsedTime";
 
 export const CardMobile = () => {
   const navigate = useNavigate();
   const [matchingRecords, setMatchingRecords] = useState([]); // Registros con email coincidente
   const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [elapsedTime, setElapsedTime] = useState({}); // Almacena los tiempos transcurridos para cada record
 
   const { user } = useContext(UserContext);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
@@ -45,7 +48,7 @@ export const CardMobile = () => {
     }
   };
 
-  const fetchLocation = () => {
+/*   const fetchLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -61,7 +64,7 @@ export const CardMobile = () => {
     } else {
       console.error("La geolocalización no es soportada en este navegador.");
     }
-  };
+  }; */
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -69,6 +72,10 @@ export const CardMobile = () => {
       navigate("/"); // Redirige a SignIn si no hay token
       return;
     }
+
+    fetchLocation()
+    .then((locationData) => setLocation(locationData))
+    .catch((err) => console.log(err));
 
     // Cargar registros desde el archivo JSON y encontrar coincidencias de email
     const fetchTimeRecording = async () => {
@@ -81,14 +88,35 @@ export const CardMobile = () => {
           (record) => record.email === user.email && record.open == true
         );
         setMatchingRecords(recordsWithSameEmail);
+        // Calcular tiempos transcurridos iniciales
+        const initialElapsedTimes = {};
+        recordsWithSameEmail.forEach((record) => {
+          initialElapsedTimes[record.id] = calculateElapsedTime(record.hourOpen);
+        });
+        setElapsedTime(initialElapsedTimes);
       } catch (error) {
         console.error("Error al cargar los registros:", error);
       }
     };
 
     fetchTimeRecording();
-    fetchLocation();
-  }, [navigate]);
+  }, [navigate, user.email, API_URL]);
+
+  useEffect(() => {
+    // Intervalo para actualizar los tiempos dinámicamente
+    const interval = setInterval(() => {
+      setElapsedTime((prevTimes) => {
+        const updatedTimes = { ...prevTimes };
+        matchingRecords.forEach((record) => {
+          updatedTimes[record.id] = calculateElapsedTime(record.hourOpen);
+        });
+        return updatedTimes;
+      });
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, [matchingRecords]);
+
   return (
     <>
       {matchingRecords.length > 0 ? (
@@ -105,28 +133,16 @@ export const CardMobile = () => {
               <li
                 key={record.id}
                 className="border border-gray-200 bg-white dark:border-gray-200 w-screen flex">
-                <div className="px-5 pt-5 text-gray-700 flex-grow flex flex-col w-3/4">
-                  <h5 className="mb-2 font-bold tracking-tight text-base">
+              <Link to={`/record/${record.id}`} className="flex-grow">
+                <div className="px-5 pt-1 text-gray-700 flex-grow flex flex-col w-3/4">
+                  <h5 className="font-bold tracking-tight text-base">
                     {record.client}
                   </h5>
-                  <p className="text-sm">
-                    Work: {Object.keys(record.work).join(", ")}
-                  </p>
-                  <p className="text-sm">KM: {record.km || "0"}</p>
-                  <p className="text-sm">
-                    Location:&nbsp;
-                    <a
-                      href={`https://www.google.com/maps?q=${record.location.latitude},${record.location.longitude}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-full hover:bg-gray-300 text-gray-600 hover:text-blue-500 transition-colors px-2 py-1 text-sm font-semibold">
-                      Ver Mapa
-                    </a>
-                  </p>
-                  <p className="text-sm">Date: {record.date}</p>
-                  <p className="text-sm">Hour: {record.hourOpen}</p>
-                  <p className="text-sm">Comments: {record.comments || "No"}</p>
+
+                  <p className="text-sm">Date: {record.date} Hour: {record.hourOpen}</p>
+                  <p className="text-sm">Elapsed Time: {elapsedTime[record.id] || "Calculating..."}</p>
                 </div>
+                </Link>
                 <div className="flex items-stretch">
                   <button
                     onClick={(e) => {
