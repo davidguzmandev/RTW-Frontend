@@ -67,7 +67,7 @@ const RecordDetail = () => {
   }, [id]);
 
   if (!record) {
-    return <div>Loading Map...</div>;
+    return <div>Loading Data...</div>;
   }
 
   return (
@@ -101,7 +101,7 @@ const RecordDetail = () => {
           <RecenterMap lat={position.latitude} lng={position.longitude} />
         </MapContainer>
       ) : (
-        <div>Loading...</div>
+        <div className="m-4">Loading Map...</div>
       )}
     </div>
     </div>

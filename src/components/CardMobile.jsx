@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
-import moment from "moment-timezone"; // Time extension
 import { Link } from "react-router-dom";
-import { fetchLocation } from "../functions/fetchLocation";
-import { calculateElapsedTime } from "../functions/elapsedTime";
+import { fetchLocation } from "../utils/fetchLocation";
+import { calculateElapsedTime } from "../utils/elapsedTime";
+import { handlePunchOut } from "../utils/handlePunchOut";
 
 export const CardMobile = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export const CardMobile = () => {
   const { user } = useContext(UserContext);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
 
-  const handlePunchOut = async (recordId) => {
+  /* const handlePunchOut = async (recordId) => {
     const time = new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
@@ -45,6 +45,17 @@ export const CardMobile = () => {
       );
     } catch (error) {
       console.error("Error al registrar el punch-out:", error);
+    }
+  }; */
+
+  const onPunchOut = async (recordId) => {
+    const confirmed = window.confirm("Are you sure you want to Punch-out?");
+    if (!confirmed) return;
+
+    try {
+      await handlePunchOut(recordId, location, API_URL, setMatchingRecords, matchingRecords);
+    } catch (error) {
+      console.error("Error during punch-out:", error);
     }
   };
 
@@ -148,16 +159,7 @@ export const CardMobile = () => {
                     onClick={(e) => {
                       // Evitar que se ejecute la acción inmediatamente
                       e.preventDefault();
-
-                      // Muestra la ventana de confirmación
-                      const confirmed = window.confirm(
-                        "Are you sure you want to Punch-out?"
-                      );
-
-                      // Si el usuario confirma, ejecuta la función handlePunchOut
-                      if (confirmed) {
-                        handlePunchOut(record.id);
-                      }
+                      onPunchOut(record.id)
                     }}
                     type="button"
                     className="bg-indigo-700 text-white p-2 hover:bg-indigo-500 text-sm h-full">
