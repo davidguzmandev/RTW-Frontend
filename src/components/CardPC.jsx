@@ -154,7 +154,7 @@ export const CardPC = () => {
           </ul>
         </div>
       ) : (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center mt-4">
           <div className="text-center">
             <p>You don't have any open work.</p>
           </div>

@@ -25,8 +25,6 @@ const RecenterMap = ({ lat, lng }) => {
   }, [lat, lng, map]);
   return null;
 };
-
-
 const Maps = () => {
   const [position, setPosition] = useState(null);
 
