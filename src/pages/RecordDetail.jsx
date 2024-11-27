@@ -53,7 +53,7 @@ const RecordDetail = () => {
     try {
       await handlePunchOut(
         recordId,
-        location,
+        position,
         API_URL,
         setMatchingRecords,
         matchingRecords,
@@ -197,8 +197,8 @@ const RecordDetail = () => {
                   isOpen={isModalOpen}
                   onClose={handleCloseModal}
                   elapsedTime={elapsedTime}
-                  onSubmit={(comment) =>
-                    onPunchOut(matchingRecords.id, comment)
+                  onSubmit={(comment2) =>
+                    onPunchOut(matchingRecords.id, comment2)
                   } // Pasa el comentario recibido
                 />
               </div>

@@ -9,6 +9,7 @@ const APIURL = import.meta.env.VITE_BACK_API_URL;
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Obtener el usuario almacenado al cargar la aplicación
@@ -16,6 +17,7 @@ export const UserProvider = ({ children }) => {
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
+        setLoading(false);
     }, []);
 
     const login = async (email, password) => {
@@ -42,7 +44,7 @@ export const UserProvider = ({ children }) => {
 
     return (
         <UserContext.Provider value={{ user, login, logout, error}}>
-            {children}
+            {!loading && children}
         </UserContext.Provider>
     );
 };

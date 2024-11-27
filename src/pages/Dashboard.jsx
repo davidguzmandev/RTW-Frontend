@@ -1,5 +1,4 @@
 import Navbar from '../partials/Navbar'
-import Footer from '../partials/Footer'
 import { Records } from '../partials/Records';
 import Maps from '../partials/Maps';
 
@@ -14,7 +13,6 @@ const Dashboard = () => {
           </div>
           <div className='flex-grow mx-auto max-w-screen-xl pb-3'>
             <Records />
-            <Footer />
           </div>
         </div>
       </>

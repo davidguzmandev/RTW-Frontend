@@ -25,10 +25,14 @@ export const Records = () => {
         const data = await response.json();
 
         // Filtrar los registros que coinciden con el email del usuario logueado
+        if (user && user.email) { // Verifica que user y user.email estén definidos
         const recordsWithSameEmail = data.filter(
           (record) => record.email === user.email && record.open == true
         );
         setMatchingRecords(recordsWithSameEmail);
+        } else {
+          console.warn("User is not defined yet.");
+        }
       } catch (error) {
         console.error("Error al cargar los registros:", error);
       }
@@ -57,7 +61,7 @@ export const Records = () => {
           </div>
         </div>
       ) : (
-        <p>Cargando datos del usuario...</p>
+        <p>Loading user data...</p>
       )}
     </div>
   );

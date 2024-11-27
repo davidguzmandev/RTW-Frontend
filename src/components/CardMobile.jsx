@@ -171,7 +171,7 @@ export const CardMobile = () => {
           </ul>
         </div>
       ) : (
-        <div className="flex items-center justify-center mt-4">
+        <div className="flex items-center justify-center mt-10">
           <div className="text-center">
             <p>You don't have any open work.</p>
           </div>

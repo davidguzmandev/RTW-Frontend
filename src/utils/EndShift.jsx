@@ -16,7 +16,7 @@ const PopupModal = ({ isOpen, onClose, elapsedTime, onSubmit }) => {
         <p className="text-sm mb-2">Elapsed Time: {elapsedTime}</p>
 
         <textarea
-          className="w-full p-2 border rounded mb-4"
+          className="w-full p-2 border rounded mb-4 text-black"
           placeholder="Enter your comment..."
           rows="4"
           value={comment}
