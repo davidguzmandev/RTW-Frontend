@@ -94,7 +94,7 @@ const ClockIn = () => {
                 date: currentDate,
                 hourOpen: currentTime,
                 km: km,
-                comments: comments,
+                comment1: comments,
                 location: location,
                 open: true
             }

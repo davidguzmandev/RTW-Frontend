@@ -8,6 +8,7 @@ import { handlePunchOut } from "../utils/handlePunchOut";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { calculateElapsedTime } from "../utils/elapsedTime";
 import { UserContext } from "../utils/UserContext";
+import PopupModal from "../utils/EndShift";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -35,11 +36,19 @@ const RecordDetail = () => {
   const [matchingRecords, setMatchingRecords] = useState([]);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
   const [position, setPosition] = useState({ lat: -34.397, lng: 150.644 });
-  const [elapsedTime, setElapsedTime] = useState(''); // Almacena los tiempos transcurridos para cada record
+  const [elapsedTime, setElapsedTime] = useState(""); // Almacena los tiempos transcurridos para cada record
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const onPunchOut = async (recordId) => {
-    const confirmed = window.confirm("Are you sure you want to Punch-out?");
-    if (!confirmed) return;
+  const handleEndShiftClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const onPunchOut = async (recordId, comment2) => {
+    setIsModalOpen(false);
 
     try {
       await handlePunchOut(
@@ -47,7 +56,8 @@ const RecordDetail = () => {
         location,
         API_URL,
         setMatchingRecords,
-        matchingRecords
+        matchingRecords,
+        comment2
       );
       navigate("/dashboard");
     } catch (error) {
@@ -94,17 +104,17 @@ const RecordDetail = () => {
         console.error("Error al cargar el registro:", error);
       }
     };
-    
+
     fetchRecord();
   }, [id]);
 
   useEffect(() => {
     if (!matchingRecords || !matchingRecords.hourOpen) return;
-  
+
     const interval = setInterval(() => {
       setElapsedTime(calculateElapsedTime(matchingRecords.hourOpen));
     }, 60000);
-  
+
     return () => clearInterval(interval);
   }, [matchingRecords]);
 
@@ -129,7 +139,7 @@ const RecordDetail = () => {
                   zoom={15}
                   scrollWheelZoom={true}
                   zoomControl={false}
-                  className="w-full h-[400px] rounded-t-lg">
+                  className="w-full h-[300px] rounded-t-lg">
                   <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -175,15 +185,22 @@ const RecordDetail = () => {
               </p>
               <div className="flex items-stretch justify-center mt-4 mb-10">
                 <button
-                  onClick={(e) => {
-                    // Evitar que se ejecute la acción inmediatamente
-                    e.preventDefault();
-                    onPunchOut(matchingRecords.id);
-                  }}
+                  onClick={
+                    handleEndShiftClick
+                    /* onPunchOut(matchingRecords.id); */
+                  }
                   type="button"
                   className="bg-indigo-950 text-white p-4 hover:bg-indigo-500 text-base h-full w-full rounded-md">
                   End Shift
                 </button>
+                <PopupModal
+                  isOpen={isModalOpen}
+                  onClose={handleCloseModal}
+                  elapsedTime={elapsedTime}
+                  onSubmit={(comment) =>
+                    onPunchOut(matchingRecords.id, comment)
+                  } // Pasa el comentario recibido
+                />
               </div>
             </div>
           </div>

@@ -68,7 +68,7 @@ const Maps = () => {
           zoom={15}
           scrollWheelZoom={true}
           zoomControl={false}
-          className="w-full h-[600px] z-0"
+          className="w-full h-[500px] z-0"
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'

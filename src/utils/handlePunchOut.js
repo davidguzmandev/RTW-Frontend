@@ -1,6 +1,6 @@
 import moment from "moment-timezone";
 
-export const handlePunchOut = async (recordId, location, API_URL, setMatchingRecords, matchingRecords) => {
+export const handlePunchOut = async (recordId, location, API_URL, setMatchingRecords, matchingRecords, comment2) => {
     const time = new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
@@ -14,6 +14,7 @@ export const handlePunchOut = async (recordId, location, API_URL, setMatchingRec
       punchOutTime: time,
       punchOutLocation: location,
       punchOutDate: currentDateLocal,
+      comment2: comment2,
       open: false,
     };
 
