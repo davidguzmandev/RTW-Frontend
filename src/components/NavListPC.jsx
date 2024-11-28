@@ -34,7 +34,7 @@ export function NavListPC() {
         {/* Menu items */}
         <ul
         className={`${ isOpen ? 'block rounded-md max-xl:border bg-white border-slate-100 max-xl:shadow-md w-48 text-left p-2' : 'hidden'}
-        absolute top-full right-0 xl:flex xl:static xl:w-auto xl:bg-transparent xl:flex-row xl:items-center xl:gap-2 xl:my-0 w-24`}
+        absolute top-full right-0 xl:flex xl:static xl:w-auto xl:bg-transparent xl:flex-row xl:items-center xl:gap-2 xl:my-0 w-24 z-10`}
         >
             <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
                 <Link to="/" className='text-right ' onClick={toggleMenu}>Home</Link>

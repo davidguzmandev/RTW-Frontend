@@ -48,7 +48,7 @@ export const Records = () => {
             Hi, {user.name}
           </h2>
           <Link to="/time">
-            <p className="bg-indigo-600 text-white text-center mb-4 absolute top-[380px] left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full shadow-md text-lg font-semibold z-10">
+            <p className="bg-indigo-600 text-white text-center mb-4 absolute top-[380px] left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full shadow-md text-lg font-semibold">
               Start Shift
             </p>
           </Link>

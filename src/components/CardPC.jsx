@@ -1,17 +1,22 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
-import moment from "moment-timezone"; // Time extension
+import { calculateElapsedTime } from "../utils/elapsedTime";
+import { handlePunchOut } from "../utils/handlePunchOut";
+import { fetchLocation } from "../utils/fetchLocation";
+import PopupModal from "../utils/EndShift";
 
 export const CardPC = () => {
   const navigate = useNavigate();
   const [matchingRecords, setMatchingRecords] = useState([]); // Registros con email coincidente
   const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [elapsedTime, setElapsedTime] = useState(""); // Almacena los tiempos transcurridos para cada record
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { user } = useContext(UserContext);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
 
-  const handlePunchOut = async (recordId) => {
+  /* const handlePunchOut = async (recordId) => {
     const time = new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
@@ -42,9 +47,36 @@ export const CardPC = () => {
     } catch (error) {
       console.error("Error al registrar el punch-out:", error);
     }
+  }; */
+
+  const handleEndShiftClick = () => {
+    setIsModalOpen(true);
   };
 
-  const fetchLocation = () => {
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const onPunchOut = async (recordId, comment2) => {
+    setIsModalOpen(false);
+
+    try {
+      await handlePunchOut(
+        recordId,
+        location,
+        API_URL,
+        setMatchingRecords,
+        matchingRecords,
+        comment2
+      );
+      navigate("/dashboard");
+    } catch (error) {
+      alert("Failed to punch out. Please try again.");
+      console.error("Error during punch-out:", error);
+    }
+  };
+
+  /* const fetchLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -60,7 +92,8 @@ export const CardPC = () => {
     } else {
       console.error("La geolocalización no es soportada en este navegador.");
     }
-  };
+  }; */
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -68,6 +101,10 @@ export const CardPC = () => {
       navigate("/"); // Redirige a SignIn si no hay token
       return;
     }
+
+    fetchLocation()
+    .then((locationData) => setLocation(locationData))
+    .catch((err) => console.log(err));
 
     // Cargar registros desde el archivo JSON y encontrar coincidencias de email
     const fetchTimeRecording = async () => {
@@ -80,14 +117,36 @@ export const CardPC = () => {
           (record) => record.email === user.email && record.open == true
         );
         setMatchingRecords(recordsWithSameEmail);
+        const initialElapsedTimes = {};
+        recordsWithSameEmail.forEach((record) => {
+          initialElapsedTimes[record.id] = calculateElapsedTime(
+            record.hourOpen
+          );
+        });
+        setElapsedTime(initialElapsedTimes);
       } catch (error) {
         console.error("Error al cargar los registros:", error);
       }
     };
 
     fetchTimeRecording();
-    fetchLocation();
-  }, [navigate]);
+  }, [navigate, user.email, API_URL]);
+
+  useEffect(() => {
+    // Intervalo para actualizar los tiempos dinámicamente
+    const interval = setInterval(() => {
+      setElapsedTime((prevTimes) => {
+        const updatedTimes = { ...prevTimes };
+        matchingRecords.forEach((record) => {
+          updatedTimes[record.id] = calculateElapsedTime(record.hourOpen);
+        });
+        return updatedTimes;
+      });
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, [matchingRecords]);
+
   return (
     <>
       {matchingRecords.length > 0 ? (
@@ -124,30 +183,27 @@ export const CardPC = () => {
                   </p>
                   <p className="text-sm">Date: {record.date}</p>
                   <p className="text-sm">Hour: {record.hourOpen}</p>
-                  <p className="text-sm">
-                    Comments: {record.comments || "No"}
+                  <p className="text-sm">Comments: {record.comments || "No"}</p>
+                  <p className="text-sm text-center">Elapsed Time</p>
+                  <p className="text-lg text-center">
+                    {elapsedTime[record.id] || "Calculating..."}
                   </p>
                 </div>
                 <div className="flex justify-end m-2">
                   <button
-                    onClick={(e) => {
-                      // Evitar que se ejecute la acción inmediatamente
-                      e.preventDefault();
-
-                      // Muestra la ventana de confirmación
-                      const confirmed = window.confirm(
-                        "Are you sure you want to Punch-out?"
-                      );
-
-                      // Si el usuario confirma, ejecuta la función handlePunchOut
-                      if (confirmed) {
-                        handlePunchOut(record.id);
-                      }
-                    }}
+                    onClick={handleEndShiftClick}
                     type="button"
-                    className="bg-indigo-700 text-white p-2 rounded-full hover:bg-indigo-500 text-sm">
-                    Punch-out
+                    className="bg-indigo-700 text-white p-2 rounded-full hover:bg-indigo-500 text-sm w-full">
+                    End Shift
                   </button>
+                  <PopupModal
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    elapsedTime={elapsedTime[record.id]}
+                    onSubmit={(comment2) =>
+                      onPunchOut(record.id, comment2)
+                    } // Pasa el comentario recibido
+                  />
                 </div>
               </li>
             ))}
