@@ -35,7 +35,7 @@ const RecordDetail = () => {
   const { id } = useParams(); // Obtiene el ID desde la URL
   const [matchingRecords, setMatchingRecords] = useState([]);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
-  const [position, setPosition] = useState({ lat: -34.397, lng: 150.644 });
+  const [location, setLocation] = useState({ latitude: -34.397, longitude: 150.644 });
   const [elapsedTime, setElapsedTime] = useState(""); // Almacena los tiempos transcurridos para cada record
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -53,7 +53,7 @@ const RecordDetail = () => {
     try {
       await handlePunchOut(
         recordId,
-        position,
+        location,
         API_URL,
         setMatchingRecords,
         matchingRecords,
@@ -71,25 +71,26 @@ const RecordDetail = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          setPosition({
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude,
+          setLocation({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
           });
         },
         (err) => {
           console.error("Error al obtener la ubicación: ", err);
           // Puedes establecer una ubicación predeterminada aquí si lo deseas
-          setPosition({ lat: -34.397, lng: 150.644 });
+          setLocation({ latitude: -34.397, longitude: 150.644 });
         }
       );
     } else {
       console.error("La geolocalización no es soportada por este navegador.");
       // Establecer una ubicación predeterminada
-      setPosition({ lat: -34.397, lng: 150.644 });
+      setLocation({ latitude: -34.397, longitude: 150.644 });
     }
   }, []);
 
   useEffect(() => {
+
     const fetchRecord = async () => {
       try {
         const response = await fetch(`${API_URL}/record/${id}`);
@@ -110,7 +111,6 @@ const RecordDetail = () => {
 
   useEffect(() => {
     if (!matchingRecords || !matchingRecords.hourOpen) return;
-
     const interval = setInterval(() => {
       setElapsedTime(calculateElapsedTime(matchingRecords.hourOpen));
     }, 60000);
@@ -133,24 +133,23 @@ const RecordDetail = () => {
         <div className="flex items-center justify-center">
           <div className="w-full max-w-sm bg-indigo-800 border rounded-lg shadow border-indigo-300">
             <div className="relative">
-              {position ? (
+              {location ? (
                 <MapContainer
-                  center={[position.lat, position.lng]}
+                  center={[location.latitude, location.longitude]}
                   zoom={15}
                   scrollWheelZoom={true}
                   zoomControl={false}
-                  className="w-full h-[300px] rounded-t-lg">
+                  className="w-full h-[300px] rounded-t-lg z-0">
                   <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
-                  <Marker position={[position.lat, position.lng]}>
+                  <Marker position={[location.latitude, location.longitude]}>
                     <Popup>
-                      You are here: {position.lat.toFixed(4)},{" "}
-                      {position.lng.toFixed(4)}
+                      {matchingRecords.name}
                     </Popup>
                   </Marker>
-                  <RecenterMap lat={position.lat} lng={position.lng} />
+                  <RecenterMap lat={location.latitude} lng={location.longitude} />
                 </MapContainer>
               ) : (
                 <div className="m-4">Loading Map...</div>
@@ -187,13 +186,13 @@ const RecordDetail = () => {
                 <button
                   onClick={
                     handleEndShiftClick
-                    /* onPunchOut(matchingRecords.id); */
                   }
                   type="button"
                   className="bg-indigo-950 text-white p-4 hover:bg-indigo-500 text-base h-full w-full rounded-md">
                   End Shift
                 </button>
                 <PopupModal
+                  className="z-1"
                   isOpen={isModalOpen}
                   onClose={handleCloseModal}
                   elapsedTime={elapsedTime}

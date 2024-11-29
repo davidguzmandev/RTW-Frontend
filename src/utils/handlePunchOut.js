@@ -29,7 +29,6 @@ export const handlePunchOut = async (
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(punchOutData),
     });
-
     // Actualizar el estado del componente para eliminar el registro del DOM
     setMatchingRecords(
       Array.isArray(matchingRecords)

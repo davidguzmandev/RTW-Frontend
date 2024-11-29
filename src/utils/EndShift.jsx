@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const PopupModal = ({ isOpen, onClose, elapsedTime, onSubmit }) => {
-    const [comment, setComment] = useState("")
+  const [comment, setComment] = useState("")
   if (!isOpen) return null; // No renderiza nada si el modal no está abierto
 
   const handleSubmit = () => {
@@ -12,11 +12,16 @@ const PopupModal = ({ isOpen, onClose, elapsedTime, onSubmit }) => {
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
       <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-        <h2 className="text-xl font-semibold mb-4">End Shift</h2>
-        <p className="text-sm mb-2">Elapsed Time: {elapsedTime}</p>
+        <h2 className="text-xl font-semibold mb-4 text-black">End Shift</h2>
+        <p className="text-center text-sm text-black">
+          Elapsed Time <br />
+          <span className="font-bold text-2xl">
+            {elapsedTime || "Calculating..."}
+          </span>
+        </p>
 
         <textarea
-          className="w-full p-2 border rounded mb-4 text-black"
+          className="w-full border rounded mb-4 text-black mt-4 p-2"
           placeholder="Enter your comment..."
           rows="4"
           value={comment}

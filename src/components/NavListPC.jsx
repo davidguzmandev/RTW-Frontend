@@ -40,7 +40,7 @@ export function NavListPC() {
                 <Link to="/" className='text-right ' onClick={toggleMenu}>Home</Link>
             </li>
             <li className="flex items-center rounded-full hover:bg-white text-gray-600 hover:text-blue-500 transition-colors px-6 py-2 text-sm font-semibold">
-                <Link to="/time" onClick={toggleMenu}>Time Record</Link>
+                <Link to="/history" onClick={toggleMenu}>History</Link>
             </li>
             {/* Contenido para Admin y editores */}
             {(user?.role === 'admin' || user?.role === 'editor') &&

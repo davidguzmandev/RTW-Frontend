@@ -9,7 +9,7 @@ import PopupModal from "../utils/EndShift";
 export const CardPC = () => {
   const navigate = useNavigate();
   const [matchingRecords, setMatchingRecords] = useState([]); // Registros con email coincidente
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [location, setLocation] = useState({ lat: -34.397, lng: 150.644 });
   const [elapsedTime, setElapsedTime] = useState(""); // Almacena los tiempos transcurridos para cada record
   const [isModalOpen, setIsModalOpen] = useState(false);
 

@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 import { fetchLocation } from "../utils/fetchLocation";
 import { calculateElapsedTime } from "../utils/elapsedTime";
 import { handlePunchOut } from "../utils/handlePunchOut";
+import PopupModal from "../utils/EndShift";
 
 export const CardMobile = () => {
   const navigate = useNavigate();
   const [matchingRecords, setMatchingRecords] = useState([]); // Registros con email coincidente
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [location, setLocation] = useState({ lat: -34.397, lng: 150.644 });
   const [elapsedTime, setElapsedTime] = useState({}); // Almacena los tiempos transcurridos para cada record
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { user } = useContext(UserContext);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
@@ -48,7 +50,34 @@ export const CardMobile = () => {
     }
   }; */
 
-  const onPunchOut = async (recordId) => {
+  const handleEndShiftClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const onPunchOut = async (recordId, comment2) => {
+    setIsModalOpen(false);
+
+    try {
+      await handlePunchOut(
+        recordId,
+        location,
+        API_URL,
+        setMatchingRecords,
+        matchingRecords,
+        comment2
+      );
+      navigate("/dashboard");
+    } catch (error) {
+      alert("Failed to punch out. Please try again.");
+      console.error("Error during punch-out:", error);
+    }
+  };
+
+  /*   const onPunchOut = async (recordId) => {
     const confirmed = window.confirm("Are you sure you want to Punch-out?");
     if (!confirmed) return;
 
@@ -57,9 +86,9 @@ export const CardMobile = () => {
     } catch (error) {
       console.error("Error during punch-out:", error);
     }
-  };
+  }; */
 
-/*   const fetchLocation = () => {
+  /*   const fetchLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -85,8 +114,8 @@ export const CardMobile = () => {
     }
 
     fetchLocation()
-    .then((locationData) => setLocation(locationData))
-    .catch((err) => console.log(err));
+      .then((locationData) => setLocation(locationData))
+      .catch((err) => console.log(err));
 
     // Cargar registros desde el archivo JSON y encontrar coincidencias de email
     const fetchTimeRecording = async () => {
@@ -102,7 +131,9 @@ export const CardMobile = () => {
         // Calcular tiempos transcurridos iniciales
         const initialElapsedTimes = {};
         recordsWithSameEmail.forEach((record) => {
-          initialElapsedTimes[record.id] = calculateElapsedTime(record.hourOpen);
+          initialElapsedTimes[record.id] = calculateElapsedTime(
+            record.hourOpen
+          );
         });
         setElapsedTime(initialElapsedTimes);
       } catch (error) {
@@ -144,27 +175,34 @@ export const CardMobile = () => {
               <li
                 key={record.id}
                 className="border border-gray-200 bg-white dark:border-gray-200 w-screen flex">
-              <Link to={`/record/${record.id}`} className="flex-grow">
-                <div className="px-5 pt-1 text-gray-700 flex-grow flex flex-col w-3/4">
-                  <h5 className="font-bold tracking-tight text-base">
-                    {record.client}
-                  </h5>
-
-                  <p className="text-sm">Date: {record.date} Hour: {record.hourOpen}</p>
-                  <p className="text-sm">Elapsed Time: {elapsedTime[record.id] || "Calculating..."}</p>
-                </div>
+                <Link to={`/record/${record.id}`} className="flex-grow">
+                  <div className="px-5 pt-1 text-gray-700 flex-grow flex flex-col w-3/4">
+                    <h5 className="font-bold tracking-tight text-base">
+                      {record.client}
+                    </h5>
+                    <p className="text-sm">
+                      Date: {record.date} Hour: {record.hourOpen}
+                    </p>
+                    <p className="text-sm">
+                      Elapsed Time: {elapsedTime[record.id] || "Calculating..."}
+                    </p>
+                  </div>
                 </Link>
                 <div className="flex items-stretch">
                   <button
-                    onClick={(e) => {
-                      // Evitar que se ejecute la acción inmediatamente
-                      e.preventDefault();
-                      onPunchOut(record.id)
-                    }}
+                    onClick={handleEndShiftClick}
                     type="button"
                     className="bg-indigo-700 text-white p-2 hover:bg-indigo-500 text-sm h-full">
                     End Shift
                   </button>
+                  <PopupModal
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    elapsedTime={elapsedTime[record.id]}
+                    onSubmit={(comment2) =>
+                      onPunchOut(record.id, comment2)
+                    } // Pasa el comentario recibido
+                  />
                 </div>
               </li>
             ))}
