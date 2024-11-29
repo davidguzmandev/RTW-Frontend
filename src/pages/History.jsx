@@ -12,6 +12,31 @@ export const History = () => {
   const { user } = useContext(UserContext);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
 
+  function getCurrentWeekRange() {
+    const currentDate = new Date();
+
+    // Obtener el día de la semana (0 = domingo, 1 = lunes, ..., 6 = sábado)
+    const currentDay = currentDate.getDay();
+
+    // Ajustar el día para que el lunes sea el primer día de la semana
+    const dayOffset = currentDay === 0 ? -6 : 1 - currentDay;
+
+    // Calcular el lunes actual
+    const monday = new Date(currentDate);
+    monday.setDate(currentDate.getDate() + dayOffset);
+
+    // Calcular el domingo actual
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+
+    // Formatear las fechas al formato deseado (DD-MM-YYYY)
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    const mondayFormatted = monday.toLocaleDateString("en-GB", options); // "25/11/2024"
+    const sundayFormatted = sunday.toLocaleDateString("en-GB", options); // "01/12/2024"
+
+    return `${mondayFormatted} to ${sundayFormatted}`;
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -33,7 +58,7 @@ export const History = () => {
         if (user && user.email) {
           // Verifica que user y user.email estén definidos
           const recordsWithSameEmail = data.filter(
-            (record) => record.email === user.email
+            (record) => record.email === user.email && record.open == false
           );
           setMatchingRecords(recordsWithSameEmail);
         } else {
@@ -43,33 +68,48 @@ export const History = () => {
         console.error("Error al cargar los registros:", error);
       }
     };
-
     fetchTimeRecording();
   }, [navigate, user, API_URL]);
 
+  // Función para calcular horas totales y minutos
+  const calculateTotalTime = (records) => {
+    let totalMinutes = 0;
+
+    records.forEach((record) => {
+      const match = record.duration.match(/(\d+)h\s*(\d+)m/); // Extraer horas y minutos
+      if (match) {
+        const hours = parseInt(match[1], 10);
+        const minutes = parseInt(match[2], 10);
+        totalMinutes += hours * 60 + minutes; // Convertir horas a minutos y sumar
+      }
+    });
+
+    const totalHours = Math.floor(totalMinutes / 60);
+    const remainingMinutes = totalMinutes % 60;
+
+    return `${totalHours}h ${remainingMinutes}m`;
+  };
+
+  const totalHoursFormatted = calculateTotalTime(matchingRecords);
+
   return (
     <>
-      <div className="py-5 flex justify-between bg-gray-100 sm:hidden">
-        <div className="pl-5">
+      <div className="py-5 flex justify-center items-center bg-gray-100 sm:hidden relative">
+        <div className="absolute left-5">
           <Link to="/dashboard">
             <IconChevronLeft stroke={2} />
           </Link>
         </div>
-        <div className="text-center m-auto">History</div>
-      </div>
-      <div className="bg-white min-h-screen flex flex-col">
-        <Navbar />
+        <div className="text-center">Work History</div>
       </div>
 
       {matchingRecords.length > 0 ? (
         <div className="bg-gray-100 w-svw">
-          <p className="font-normal text-gray-600 text-sm text-center p-2">
-            <span className="inline-flex items-center rounded-full bg-indigo-100 px-1 font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-              {matchingRecords.length}
-            </span>
-            &nbsp;Work in progress
-          </p>
-
+          <p className="text-sm text-center">{getCurrentWeekRange()}</p>
+          <div className="text-center p-2">
+            <p>Total Hours:</p>
+            <p className="font-bold text-lg">{totalHoursFormatted}</p>
+          </div>
           <ul className="flex-wrap flex place-items-end">
             {matchingRecords.map((record) => (
               <li
@@ -83,6 +123,7 @@ export const History = () => {
                     <p className="text-sm">
                       Date: {record.date} Hour: {record.hourOpen}
                     </p>
+                    <p className="text-sm">Hours worked: {record.duration}</p>
                   </div>
                 </Link>
               </li>
@@ -96,6 +137,9 @@ export const History = () => {
           </div>
         </div>
       )}
+      <div className="bg-white min-h-screen flex flex-col">
+        <Navbar />
+      </div>
     </>
   );
 };

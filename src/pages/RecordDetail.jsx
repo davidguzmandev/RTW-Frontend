@@ -120,13 +120,13 @@ const RecordDetail = () => {
 
   return (
     <>
-      <div className="py-5 flex justify-between bg-gray-100">
-        <div className="pl-5">
+      <div className="py-5 flex justify-center items-center bg-gray-100 sm:hidden relative">
+        <div className="absolute left-5">
           <Link to="/dashboard">
             <IconChevronLeft stroke={2} />
           </Link>
         </div>
-        <div className="text-center m-auto">Work in Progress</div>
+        <div className="text-center">Work in Progress</div>
       </div>
       <div className="px-5 py-2">
         <Navbar />
