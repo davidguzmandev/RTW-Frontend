@@ -14,26 +14,33 @@ export const History = () => {
 
   function getCurrentWeekRange() {
     const currentDate = new Date();
-
+  
     // Obtener el día de la semana (0 = domingo, 1 = lunes, ..., 6 = sábado)
     const currentDay = currentDate.getDay();
-
+  
     // Ajustar el día para que el lunes sea el primer día de la semana
     const dayOffset = currentDay === 0 ? -6 : 1 - currentDay;
-
+  
     // Calcular el lunes actual
     const monday = new Date(currentDate);
     monday.setDate(currentDate.getDate() + dayOffset);
-
+  
     // Calcular el domingo actual
     const sunday = new Date(monday);
     sunday.setDate(monday.getDate() + 6);
-
-    // Formatear las fechas al formato deseado (DD-MM-YYYY)
-    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    const mondayFormatted = monday.toLocaleDateString("en-GB", options); // "25/11/2024"
-    const sundayFormatted = sunday.toLocaleDateString("en-GB", options); // "01/12/2024"
-
+  
+    // Función para convertir a formato "yyyy-mm-dd"
+    function convertToISOFormat(date) {
+      const day = String(date.getDate()).padStart(2, '0'); // Agrega cero si el día es menor a 10
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Agrega cero si el mes es menor a 10
+      const year = date.getFullYear();
+      return `${year}-${month}-${day}`;
+    }
+  
+    // Convertir las fechas a formato "yyyy-mm-dd"
+    const mondayFormatted = convertToISOFormat(monday); // "2024-11-25"
+    const sundayFormatted = convertToISOFormat(sunday); // "2024-12-01"
+  
     return `${mondayFormatted} to ${sundayFormatted}`;
   }
 
@@ -115,17 +122,15 @@ export const History = () => {
               <li
                 key={record.id}
                 className="border border-gray-200 bg-white dark:border-gray-200 w-screen flex">
-                <Link to={`/record/${record.id}`} className="flex-grow">
-                  <div className="px-5 pt-1 text-gray-700 flex-grow flex flex-col w-3/4">
-                    <h5 className="font-bold tracking-tight text-base">
-                      {record.client}
-                    </h5>
-                    <p className="text-sm">
-                      Date: {record.date} Hour: {record.hourOpen}
-                    </p>
-                    <p className="text-sm">Hours worked: {record.duration}</p>
-                  </div>
-                </Link>
+                <div className="px-5 pt-1 text-gray-700 flex-grow flex flex-col w-3/4">
+                  <h5 className="font-bold tracking-tight text-base">
+                    {record.client}
+                  </h5>
+                  <p className="text-sm">
+                    Date: {record.date} Hour: {record.hourOpen}
+                  </p>
+                  <p className="text-sm">Hours worked: {record.duration}</p>
+                </div>
               </li>
             ))}
           </ul>
