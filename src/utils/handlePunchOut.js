@@ -6,7 +6,8 @@ export const handlePunchOut = async (
   API_URL,
   setMatchingRecords,
   matchingRecords,
-  comment2
+  comment2,
+  elapsedTime
 ) => {
   const time = new Date().toLocaleTimeString([], {
     hour: "2-digit",
@@ -20,6 +21,7 @@ export const handlePunchOut = async (
     punchOutLocation: location,
     punchOutDate: currentDateLocal,
     comment2: comment2,
+    duration: elapsedTime,
     open: false,
   };
 

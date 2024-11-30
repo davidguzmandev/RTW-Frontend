@@ -14,33 +14,33 @@ export const History = () => {
 
   function getCurrentWeekRange() {
     const currentDate = new Date();
-  
+
     // Obtener el día de la semana (0 = domingo, 1 = lunes, ..., 6 = sábado)
     const currentDay = currentDate.getDay();
-  
+
     // Ajustar el día para que el lunes sea el primer día de la semana
     const dayOffset = currentDay === 0 ? -6 : 1 - currentDay;
-  
+
     // Calcular el lunes actual
     const monday = new Date(currentDate);
     monday.setDate(currentDate.getDate() + dayOffset);
-  
+
     // Calcular el domingo actual
     const sunday = new Date(monday);
     sunday.setDate(monday.getDate() + 6);
-  
+
     // Función para convertir a formato "yyyy-mm-dd"
     function convertToISOFormat(date) {
-      const day = String(date.getDate()).padStart(2, '0'); // Agrega cero si el día es menor a 10
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // Agrega cero si el mes es menor a 10
+      const day = String(date.getDate()).padStart(2, "0"); // Agrega cero si el día es menor a 10
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // Agrega cero si el mes es menor a 10
       const year = date.getFullYear();
       return `${year}-${month}-${day}`;
     }
-  
+
     // Convertir las fechas a formato "yyyy-mm-dd"
     const mondayFormatted = convertToISOFormat(monday); // "2024-11-25"
     const sundayFormatted = convertToISOFormat(sunday); // "2024-12-01"
-  
+
     return `${mondayFormatted} to ${sundayFormatted}`;
   }
 
@@ -101,6 +101,9 @@ export const History = () => {
 
   return (
     <>
+      <div className="bg-white flex flex-col">
+        <Navbar />
+      </div>
       <div className="py-5 flex justify-center items-center bg-gray-100 sm:hidden relative">
         <div className="absolute left-5">
           <Link to="/dashboard">
@@ -111,9 +114,9 @@ export const History = () => {
       </div>
 
       {matchingRecords.length > 0 ? (
-        <div className="bg-gray-100 w-svw">
+        <div className="max-sm:w-svw w-[520px] mx-auto max-w-screen-xl">
           <p className="text-sm text-center">{getCurrentWeekRange()}</p>
-          <div className="text-center p-2">
+          <div className="text-center p-2 bg-gray-100 rounded-t-lg">
             <p>Total Hours:</p>
             <p className="font-bold text-lg">{totalHoursFormatted}</p>
           </div>
@@ -121,13 +124,14 @@ export const History = () => {
             {matchingRecords.map((record) => (
               <li
                 key={record.id}
-                className="border border-gray-200 bg-white dark:border-gray-200 w-screen flex">
+                className="bg-white w-screen flex border-b-indigo-500 border">
                 <div className="px-5 pt-1 text-gray-700 flex-grow flex flex-col w-3/4">
+                  <p className="text-xs">{record.date}</p>
                   <h5 className="font-bold tracking-tight text-base">
                     {record.client}
                   </h5>
                   <p className="text-sm">
-                    Date: {record.date} Hour: {record.hourOpen}
+                    Hour: {record.hourOpen}
                   </p>
                   <p className="text-sm">Hours worked: {record.duration}</p>
                 </div>
@@ -138,13 +142,10 @@ export const History = () => {
       ) : (
         <div className="flex items-center justify-center mt-10">
           <div className="text-center">
-            <p>You don't have any open work.</p>
+            <p>You have not recorded time yet</p>
           </div>
         </div>
       )}
-      <div className="bg-white min-h-screen flex flex-col">
-        <Navbar />
-      </div>
     </>
   );
 };

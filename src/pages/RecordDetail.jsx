@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { handlePunchOut } from "../utils/handlePunchOut";
+import { fetchLocation } from "../utils/fetchLocation";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { calculateElapsedTime } from "../utils/elapsedTime";
 import { UserContext } from "../utils/UserContext";
@@ -57,7 +58,8 @@ const RecordDetail = () => {
         API_URL,
         setMatchingRecords,
         matchingRecords,
-        comment2
+        comment2,
+        elapsedTime
       );
       navigate("/dashboard");
     } catch (error) {
@@ -67,8 +69,10 @@ const RecordDetail = () => {
   };
 
   useEffect(() => {
+
+
     // Solicitar la ubicación del usuario
-    if (navigator.geolocation) {
+    /* if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           setLocation({
@@ -86,10 +90,14 @@ const RecordDetail = () => {
       console.error("La geolocalización no es soportada por este navegador.");
       // Establecer una ubicación predeterminada
       setLocation({ latitude: -34.397, longitude: 150.644 });
-    }
+    } */
   }, []);
 
   useEffect(() => {
+
+    fetchLocation()
+    .then((locationData) => setLocation(locationData))
+    .catch((err) => console.log(err));
 
     const fetchRecord = async () => {
       try {
@@ -99,7 +107,7 @@ const RecordDetail = () => {
 
         // Calcular tiempos transcurridos iniciales
         if (data?.hourOpen) {
-          setElapsedTime(calculateElapsedTime(data.hourOpen));
+          setElapsedTime(calculateElapsedTime(data.hourOpen, data.date));
         }
       } catch (error) {
         console.error("Error al cargar el registro:", error);
@@ -112,7 +120,7 @@ const RecordDetail = () => {
   useEffect(() => {
     if (!matchingRecords || !matchingRecords.hourOpen) return;
     const interval = setInterval(() => {
-      setElapsedTime(calculateElapsedTime(matchingRecords.hourOpen));
+      setElapsedTime(calculateElapsedTime(matchingRecords.hourOpen, matchingRecords.date));
     }, 60000);
 
     return () => clearInterval(interval);

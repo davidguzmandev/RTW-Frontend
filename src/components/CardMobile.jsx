@@ -11,7 +11,7 @@ export const CardMobile = () => {
   const navigate = useNavigate();
   const [matchingRecords, setMatchingRecords] = useState([]); // Registros con email coincidente
   const [location, setLocation] = useState({ lat: -34.397, lng: 150.644 });
-  const [elapsedTime, setElapsedTime] = useState({}); // Almacena los tiempos transcurridos para cada record
+  const [elapsedTime, setElapsedTime] = useState(""); // Almacena los tiempos transcurridos para cada record
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { user } = useContext(UserContext);
@@ -68,7 +68,8 @@ export const CardMobile = () => {
         API_URL,
         setMatchingRecords,
         matchingRecords,
-        comment2
+        comment2,
+        elapsedTime
       );
       navigate("/dashboard");
     } catch (error) {
@@ -132,7 +133,7 @@ export const CardMobile = () => {
         const initialElapsedTimes = {};
         recordsWithSameEmail.forEach((record) => {
           initialElapsedTimes[record.id] = calculateElapsedTime(
-            record.hourOpen
+            record.hourOpen, record.date
           );
         });
         setElapsedTime(initialElapsedTimes);
@@ -150,7 +151,7 @@ export const CardMobile = () => {
       setElapsedTime((prevTimes) => {
         const updatedTimes = { ...prevTimes };
         matchingRecords.forEach((record) => {
-          updatedTimes[record.id] = calculateElapsedTime(record.hourOpen);
+          updatedTimes[record.id] = calculateElapsedTime(record.hourOpen, record.date);
         });
         return updatedTimes;
       });

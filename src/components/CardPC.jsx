@@ -67,7 +67,8 @@ export const CardPC = () => {
         API_URL,
         setMatchingRecords,
         matchingRecords,
-        comment2
+        comment2,
+        elapsedTime
       );
       navigate("/dashboard");
     } catch (error) {
@@ -120,7 +121,7 @@ export const CardPC = () => {
         const initialElapsedTimes = {};
         recordsWithSameEmail.forEach((record) => {
           initialElapsedTimes[record.id] = calculateElapsedTime(
-            record.hourOpen
+            record.hourOpen, record.date
           );
         });
         setElapsedTime(initialElapsedTimes);
@@ -138,7 +139,7 @@ export const CardPC = () => {
       setElapsedTime((prevTimes) => {
         const updatedTimes = { ...prevTimes };
         matchingRecords.forEach((record) => {
-          updatedTimes[record.id] = calculateElapsedTime(record.hourOpen);
+          updatedTimes[record.id] = calculateElapsedTime(record.hourOpen, record.date);
         });
         return updatedTimes;
       });
