@@ -15,13 +15,16 @@ export const handlePunchOut = async (
   });
   // Fecha actual en la zona horaria local
   const currentDateLocal = moment().tz("America/New_York").format("YYYY-MM-DD");
+
+  const duration = elapsedTime[recordId];
+  console.log(elapsedTime);
   const punchOutData = {
     id: recordId, // Incluye el ID del registro
     punchOutTime: time,
     punchOutLocation: location,
     punchOutDate: currentDateLocal,
     comment2: comment2,
-    duration: elapsedTime,
+    duration: duration,
     open: false,
   };
 

@@ -50,7 +50,10 @@ const RecordDetail = () => {
 
   const onPunchOut = async (recordId, comment2) => {
     setIsModalOpen(false);
-
+    //Esto arregla el problema de ID de elapsedTime
+    const elapsedTimeId = {
+      [recordId]: elapsedTime
+    }
     try {
       await handlePunchOut(
         recordId,
@@ -59,7 +62,7 @@ const RecordDetail = () => {
         setMatchingRecords,
         matchingRecords,
         comment2,
-        elapsedTime
+        elapsedTimeId
       );
       navigate("/dashboard");
     } catch (error) {
@@ -104,7 +107,6 @@ const RecordDetail = () => {
         const response = await fetch(`${API_URL}/record/${id}`);
         const data = await response.json();
         setMatchingRecords(data);
-
         // Calcular tiempos transcurridos iniciales
         if (data?.hourOpen) {
           setElapsedTime(calculateElapsedTime(data.hourOpen, data.date));

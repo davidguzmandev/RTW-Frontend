@@ -9,7 +9,10 @@ import PopupModal from "../utils/EndShift";
 export const CardPC = () => {
   const navigate = useNavigate();
   const [matchingRecords, setMatchingRecords] = useState([]); // Registros con email coincidente
-  const [location, setLocation] = useState({ lat: -34.397, lng: 150.644 });
+  const [location, setLocation] = useState({
+    latitude: -34.397,
+    longitude: 150.644,
+  });
   const [elapsedTime, setElapsedTime] = useState(""); // Almacena los tiempos transcurridos para cada record
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -95,7 +98,6 @@ export const CardPC = () => {
     }
   }; */
 
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -104,8 +106,8 @@ export const CardPC = () => {
     }
 
     fetchLocation()
-    .then((locationData) => setLocation(locationData))
-    .catch((err) => console.log(err));
+      .then((locationData) => setLocation(locationData))
+      .catch((err) => console.log(err));
 
     // Cargar registros desde el archivo JSON y encontrar coincidencias de email
     const fetchTimeRecording = async () => {
@@ -121,7 +123,8 @@ export const CardPC = () => {
         const initialElapsedTimes = {};
         recordsWithSameEmail.forEach((record) => {
           initialElapsedTimes[record.id] = calculateElapsedTime(
-            record.hourOpen, record.date
+            record.hourOpen,
+            record.date
           );
         });
         setElapsedTime(initialElapsedTimes);
@@ -139,7 +142,10 @@ export const CardPC = () => {
       setElapsedTime((prevTimes) => {
         const updatedTimes = { ...prevTimes };
         matchingRecords.forEach((record) => {
-          updatedTimes[record.id] = calculateElapsedTime(record.hourOpen, record.date);
+          updatedTimes[record.id] = calculateElapsedTime(
+            record.hourOpen,
+            record.date
+          );
         });
         return updatedTimes;
       });
@@ -201,9 +207,7 @@ export const CardPC = () => {
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
                     elapsedTime={elapsedTime[record.id]}
-                    onSubmit={(comment2) =>
-                      onPunchOut(record.id, comment2)
-                    } // Pasa el comentario recibido
+                    onSubmit={(comment2) => onPunchOut(record.id, comment2)} // Pasa el comentario recibido
                   />
                 </div>
               </li>

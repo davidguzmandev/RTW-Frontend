@@ -8,7 +8,7 @@ import { fetchLocation } from "../utils/fetchLocation";
 export const History = () => {
   const navigate = useNavigate();
   const [matchingRecords, setMatchingRecords] = useState([]); // Registros con email coincidente
-  const [location, setLocation] = useState({ lat: -34.397, lng: 150.644 });
+  const [location, setLocation] = useState({ latitude: -34.397, longitude: 150.644 });
   const { user } = useContext(UserContext);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
 
