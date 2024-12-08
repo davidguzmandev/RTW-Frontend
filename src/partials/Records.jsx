@@ -41,14 +41,14 @@ export const Records = () => {
     fetchTimeRecording();
   }, [navigate, user, API_URL]);
   return (
-    <div className="rounded-lg mb-10">
+    <div className="mb-10">
       {user ? (
         <div>
-          <h2 className="bg-transparent text-center mb-4 max-sm:absolute max-sm:top-4 left-1/2 transform max-sm:-translate-x-1/2 max-sm:bg-white px-2 py-1 max-sm:rounded-full max-sm:shadow-md text-lg font-semibold max-sm:z-10">
+          <h2 className="mb-4 max-sm:bg-white px-2 py-1 text-lg font-semibold">
             Hi, {user.name}
           </h2>
           <Link to="/time">
-            <p className="bg-indigo-600 text-white text-center mb-4 absolute top-[380px] left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full shadow-md text-lg font-semibold">
+            <p className="bg-indigo-600 text-white text-center mb-4 px-4 py-2 font-semibold">
               Start Shift
             </p>
           </Link>
