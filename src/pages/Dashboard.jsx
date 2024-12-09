@@ -8,7 +8,9 @@ const Dashboard = () => {
       <div className="bg-white min-h-screen flex flex-col">
         <Navbar />
         <Records />
-        <Maps />
+        <div className="rounded">
+          <Maps />
+        </div>
       </div>
     </>
   );
