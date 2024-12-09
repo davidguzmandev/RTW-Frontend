@@ -1,16 +1,18 @@
 import Navbar from "../partials/Navbar";
-import { Records } from "../partials/Records";
+import { Welcome } from "../partials/Welcome";
 import Maps from "../partials/Maps";
+import { Records } from "../partials/Records";
 
 const Dashboard = () => {
   return (
     <>
       <div className="bg-white min-h-screen flex flex-col">
         <Navbar />
-        <Records />
+        <Welcome />
         <div className="rounded">
           <Maps />
         </div>
+        <Records />
       </div>
     </>
   );

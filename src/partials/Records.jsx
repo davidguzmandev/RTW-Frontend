@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 import { CardPC } from "../components/CardPC";
 import { CardMobile } from "../components/CardMobile";
@@ -44,14 +44,6 @@ export const Records = () => {
     <div className="mb-10">
       {user ? (
         <div>
-          <h2 className="mb-4 max-sm:bg-white px-2 py-1 text-lg font-semibold sm:flex sm:justify-center">
-            Hi, {user.name}
-          </h2>
-          <Link to="/time" className="sm:flex sm:justify-center">
-            <p className="bg-indigo-600 text-white text-center mb-4 px-4 py-2 font-semibold sm:w-48">
-              Start Shift
-            </p>
-          </Link>
           <div className="max-sm:hidden">
             <CardPC />
           </div>
