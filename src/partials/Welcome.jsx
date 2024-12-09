@@ -17,6 +17,9 @@ export const Welcome = () => {
   }, [navigate, user, API_URL]);
   return (
     <div className="mb-4">
+      <div className="flex justify-center sm:hidden">
+        <img src="../images/RTW.png" alt="Ready to Work"/>
+      </div>
       {user ? (
         <div>
           <h2 className="mb-4 max-sm:bg-white px-2 py-1 text-lg font-semibold sm:flex sm:justify-center">

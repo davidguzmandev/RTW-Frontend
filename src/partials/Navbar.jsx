@@ -8,8 +8,11 @@ const Navbar = () => {
     {/* Navbar para PC */}
       <div className="mx-auto max-w-screen-xl py-3 bg-white max-sm:hidden">
         <div className="flex items-center justify-between text-blue-gray-900 border-0 rounded-full p-4 shadow-inner bg-gray-100 pr-10 pl-10 max-sm:pl-6 max-sm:pr-6">
-          <h1 className='font-bold text-lg max-sm:text-base'>
-            Ready To Work
+          <h1 className='font-bold text-lg max-sm:text-base flex items-center'>
+            <img src="../images/icon.png" alt="r2work" className='w-10 mr-1'/>
+            <p>
+              r2work
+            </p>
             <span className='font-extralight mr-40 max-sm:mr-4 max-sm:text-base'> | Company</span>
           </h1>
           <NavListPC />
