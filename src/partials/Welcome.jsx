@@ -22,11 +22,11 @@ export const Welcome = () => {
   return (
     <div className="m-4 mt-2">
       <div className="flex justify-between">
-        <div className="bg-sky-200 rounded-full w-fit px-2 py-1 text-sm flex items-center">
-          <IconCalendarMonth stroke={2} />
+        <div className="bg-sky-200 rounded-full w-fit px-2 text-xs flex items-center">
+          <IconCalendarMonth stroke={1} />
           {currentDate}
         </div>
-        <img src="../images/RTW.webp" alt="Workron" className="w-40 h-full sm:hidden" />
+        <img src="../images/RTW.webp" alt="Workron" className="w-28 h-full sm:hidden" />
       </div>
       <div className="flex justify-between sm:hidden">
         {user ? (

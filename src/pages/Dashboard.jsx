@@ -9,7 +9,7 @@ const Dashboard = () => {
       <div className="bg-white min-h-screen flex flex-col">
         <Navbar />
         <Welcome />
-        <div className="rounded">
+        <div className="rounded z-0">
           <Maps />
         </div>
         <Records />
