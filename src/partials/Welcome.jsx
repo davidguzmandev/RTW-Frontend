@@ -2,12 +2,13 @@ import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 import { IconCalendarMonth } from "@tabler/icons-react";
-import { greeting } from "../utils/greeting"
+import { greeting } from "../utils/greeting";
 import moment from "moment"; // Time extension
 
 export const Welcome = () => {
   const navigate = useNavigate();
   const welcomeMessage = greeting();
+  const defaultImage = "/images/users/default.webp";
 
   const { user } = useContext(UserContext);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
@@ -28,17 +29,28 @@ export const Welcome = () => {
           <IconCalendarMonth stroke={1} />
           {currentDate}
         </div>
-        <img src="../images/RTW.webp" alt="Workron" className="w-28 h-full sm:hidden" />
+        <img
+          src="../images/RTW.webp"
+          alt="Workron"
+          className="w-28 h-full sm:hidden"
+        />
       </div>
-      <div className="flex justify-between sm:hidden">
+      <div className="sm:hidden">
         {user ? (
-          <div>
-            <p className="mt-4 px-2 text-sm font-medium sm:flex sm:justify-center text-neutral-400">
-              {welcomeMessage}
-            </p>
-            <h2 className="mb-4 px-2 text-lg font-semibold sm:flex sm:justify-center">
-              {user.name}
-            </h2>
+          <div className="flex justify-between items-center">
+            <div className="mr-4">
+              <p className="mt-4 px-2 text-sm font-medium text-neutral-400">
+                {welcomeMessage},
+              </p>
+              <h2 className="mb-4 px-2 text-lg font-semibold">{user.name}</h2>
+            </div>
+            <div>
+              <img
+                src={user.photo ? user.photo : defaultImage}
+                alt="Profile Picture"
+                className="w-12 rounded-full"
+              />
+            </div>
           </div>
         ) : (
           <p>Loading user data...</p>
