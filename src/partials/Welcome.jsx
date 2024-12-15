@@ -2,10 +2,12 @@ import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 import { IconCalendarMonth } from "@tabler/icons-react";
+import { greeting } from "../utils/greeting"
 import moment from "moment"; // Time extension
 
 export const Welcome = () => {
   const navigate = useNavigate();
+  const welcomeMessage = greeting();
 
   const { user } = useContext(UserContext);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
@@ -31,8 +33,11 @@ export const Welcome = () => {
       <div className="flex justify-between sm:hidden">
         {user ? (
           <div>
-            <h2 className="my-4 max-sm:bg-white px-2 py-1 text-lg font-semibold sm:flex sm:justify-center">
-              Hi, {user.name}
+            <p className="mt-4 px-2 text-sm font-medium sm:flex sm:justify-center text-neutral-400">
+              {welcomeMessage}
+            </p>
+            <h2 className="mb-4 px-2 text-lg font-semibold sm:flex sm:justify-center">
+              {user.name}
             </h2>
           </div>
         ) : (

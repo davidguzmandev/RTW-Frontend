@@ -13,7 +13,7 @@ const Navbar = () => {
             <p>
               workron
             </p>
-            <span className='font-extralight mr-40 max-sm:mr-4 max-sm:text-base'> | Company</span>
+            <span className='font-extralight mr-40 max-sm:mr-4 max-sm:text-base'>{/*  | Company */}</span>
           </h1>
           <NavListPC />
         </div>
