@@ -30,7 +30,7 @@ const Home = () => {
                                 <p>Enter your information to Sign In</p>
                                 <br />
                                 <p>-- Dear guest, login with: --</p>
-                                <p><strong>Email:</strong> admin@gmail.com</p>
+                                <p><strong>Email:</strong> worker@gmail.com</p>
                                 <p><strong>Password:</strong> 123</p>
                                 <p>and wait 20 second</p>
                             </div>

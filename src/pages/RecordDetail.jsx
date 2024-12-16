@@ -138,7 +138,7 @@ const RecordDetail = () => {
         </div>
         <div className="text-center">Work in Progress</div>
       </div>
-      <div className="px-5 py-2">
+      <div className="px-5 py-2 mb-16">
         <Navbar />
         <div className="flex items-center justify-center">
           <div className="w-full max-w-sm bg-indigo-800 border rounded-lg shadow border-indigo-300">

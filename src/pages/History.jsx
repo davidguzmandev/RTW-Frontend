@@ -114,7 +114,7 @@ export const History = () => {
       </div>
 
       {matchingRecords.length > 0 ? (
-        <div className="max-sm:w-svw w-[520px] mx-auto max-w-screen-xl">
+        <div className="max-sm:w-svw w-[520px] mx-auto max-w-screen-xl mb-32">
           <p className="text-sm text-center">Current Pay Period</p>
           <p className="text-md text-center">{getCurrentWeekRange()}</p>
           <div className="text-center p-2 bg-gray-100 rounded-t-lg">
