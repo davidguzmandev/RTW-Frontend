@@ -19,9 +19,10 @@ const Time = () => {
             <div className='bg-white h-screen flex flex-col'>
                 <div className='flex-grow flex flex-col'>
                     <Navbar />
-                    <ClockIn />
+                    <div className='mb-20'>
+                        <ClockIn />
+                    </div>
                 </div>
-                <Footer />
             </div>
         </>
     );

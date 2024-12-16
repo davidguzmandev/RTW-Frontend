@@ -6,10 +6,10 @@ import { Records } from "../partials/Records";
 const Dashboard = () => {
   return (
     <>
-      <div className="bg-white min-h-screen flex flex-col">
+      <div className="bg-gray-100 min-h-screen flex flex-col">
         <Navbar />
         <Welcome />
-        <div className="rounded z-0">
+        <div className="z-0 mx-4 rounded-lg overflow-hidden">
           <Maps />
         </div>
         <Records />

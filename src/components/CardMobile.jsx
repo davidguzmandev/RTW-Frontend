@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { fetchLocation } from "../utils/fetchLocation";
 import { calculateElapsedTime } from "../utils/elapsedTime";
 import { handlePunchOut } from "../utils/handlePunchOut";
+import { IconBoltFilled} from "@tabler/icons-react";
 import PopupModal from "../utils/EndShift";
 
 export const CardMobile = () => {
@@ -19,39 +20,6 @@ export const CardMobile = () => {
 
   const { user } = useContext(UserContext);
   const API_URL = import.meta.env.VITE_BACK_API_URL;
-
-  /* const handlePunchOut = async (recordId) => {
-    const time = new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    // Fecha actual en la zona horaria local
-    const currentDateLocal = moment()
-      .tz("America/New_York")
-      .format("YYYY-MM-DD");
-    const punchOutData = {
-      id: recordId, // Incluye el ID del registro
-      punchOutTime: time,
-      punchOutLocation: location,
-      punchOutDate: currentDateLocal,
-      open: false,
-    };
-
-    try {
-      await fetch(`${API_URL}/timePunchOut`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(punchOutData),
-      });
-
-      // Actualizar el estado del componente para eliminar el registro del DOM
-      setMatchingRecords(
-        matchingRecords.filter((record) => record.id !== recordId)
-      );
-    } catch (error) {
-      console.error("Error al registrar el punch-out:", error);
-    }
-  }; */
 
   const handleEndShiftClick = () => {
     setIsModalOpen(true);
@@ -81,35 +49,6 @@ export const CardMobile = () => {
       console.error("Error during punch-out:", error);
     }
   };
-
-  /*   const onPunchOut = async (recordId) => {
-    const confirmed = window.confirm("Are you sure you want to Punch-out?");
-    if (!confirmed) return;
-
-    try {
-      await handlePunchOut(recordId, location, API_URL, setMatchingRecords, matchingRecords);
-    } catch (error) {
-      console.error("Error during punch-out:", error);
-    }
-  }; */
-
-  /*   const fetchLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error("Error al obtener la ubicación: ", error);
-        }
-      );
-    } else {
-      console.error("La geolocalización no es soportada en este navegador.");
-    }
-  }; */
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -217,8 +156,11 @@ export const CardMobile = () => {
         </div>
       ) : (
         <div className="flex items-center justify-center mt-10">
-          <div className="text-center">
-            <p>You don't have any open work.</p>
+          <div className="text-center font-medium text-base text-neutral-400">
+            <p className="flex">
+              <IconBoltFilled stroke={1} />
+              Let's get to work!
+            </p>
           </div>
         </div>
       )}

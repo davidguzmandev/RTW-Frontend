@@ -65,7 +65,7 @@ const Maps = () => {
       {position ? (
         <MapContainer
           center={[position.lat, position.lng]}
-          zoom={15}
+          zoom={13}
           scrollWheelZoom={true}
           zoomControl={false}
           className="w-full h-[200px]"

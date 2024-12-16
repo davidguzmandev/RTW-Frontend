@@ -23,8 +23,8 @@ export const Welcome = () => {
     }
   }, [navigate, user, API_URL]);
   return (
-    <div className="m-4 mt-2">
-      <div className="flex justify-between">
+    <div className="m-4 mt-2 ">
+      <div className="flex justify-between ">
         <div className="bg-sky-200 rounded-full w-fit px-2 text-xs flex items-center">
           <IconCalendarMonth stroke={1} />
           {currentDate}
@@ -35,7 +35,7 @@ export const Welcome = () => {
           className="w-28 h-full sm:hidden"
         />
       </div>
-      <div className="sm:hidden">
+      <div className="sm:hidden rounded-t-lg">
         {user ? (
           <div className="flex justify-between items-center">
             <div className="mr-4">
@@ -57,7 +57,7 @@ export const Welcome = () => {
         )}
       </div>
       <Link to="/time" className="sm:flex sm:justify-center">
-        <p className="bg-indigo-600 text-white text-center mb-4 px-4 py-2 font-semibold sm:w-48">
+        <p className="bg-indigo-600 text-white text-center mb-4 px-4 py-2 font-semibold sm:w-48 rounded-xl">
           Start Shift
         </p>
       </Link>
