@@ -25,7 +25,7 @@ export const Welcome = () => {
   return (
     <div className="m-4 mt-2 ">
       <div className="flex justify-between ">
-        <div className="bg-sky-200 rounded-full w-fit px-2 text-xs flex items-center">
+        <div className="bg-sky-200 rounded-full w-fit px-2 text-xs flex items-center sm:hidden">
           <IconCalendarMonth stroke={1} />
           {currentDate}
         </div>
@@ -45,11 +45,13 @@ export const Welcome = () => {
               <h2 className="mb-4 px-2 text-lg font-semibold">{user.name}</h2>
             </div>
             <div>
-              <img
-                src={user.photo ? user.photo : defaultImage}
-                alt="Profile Picture"
-                className="w-12 rounded-full"
-              />
+              <Link to="/account" className="sm:flex sm:justify-center">
+                <img
+                  src={user.photo ? user.photo : defaultImage}
+                  alt="Profile Picture"
+                  className="w-12 rounded-full"
+                />
+              </Link>
             </div>
           </div>
         ) : (

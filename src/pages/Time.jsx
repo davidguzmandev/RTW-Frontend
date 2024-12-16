@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../partials/Navbar'
 import ClockIn from '../components/ClockIn';
-import Footer from '../partials/Footer';
 
 const Time = () => {
     const navigate = useNavigate();
